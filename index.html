@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Academic Quiz Hub (CSC 392, 394, 396)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 shadow-lg py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="returnToDashboard()">
+                <div class="bg-indigo-600 text-white p-2 rounded-xl font-bold text-xl shadow-md">📚</div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Complete Academic Quiz Hub</h1>
+                    <p class="text-xs text-slate-400">All 650 Questions from CSC 392, CSC 394 & CSC 396</p>
+                </div>
+            </div>
+            <div id="nav-stats" class="hidden flex items-center space-x-4 text-sm bg-slate-900/60 px-4 py-2 rounded-lg border border-slate-700">
+                <span class="text-slate-400">Course: <strong id="current-course-name" class="text-indigo-400"></strong></span>
+                <span class="text-slate-400">Question: <strong id="current-q-num" class="text-white">1</strong>/<span id="total-q-num">100</span></span>
+                <span class="text-slate-400">Score: <strong id="live-score" class="text-emerald-400">0</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 my-auto">
+
+        <!-- Dashboard View (Course Selection) -->
+        <div id="dashboard-view" class="space-y-6">
+            <div class="text-center space-y-2 py-6">
+                <h2 class="text-3xl font-extrabold text-white tracking-tight">Select a Course to Practice</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">Practice every single question from your course modules with instant feedback, answer keys, and detailed explanations.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- CSC 392 Card -->
+                <div onclick="startQuiz('csc392')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-indigo-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-indigo-500/10">
+                    <div>
+                        <div class="inline-block bg-indigo-500/20 text-indigo-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 392 (100 Qs)</div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition">Software Development</h3>
+                        <p class="text-slate-400 text-sm mt-2">SDLC, software engineering principles, testing, compilation, and object-oriented programming (OOP).</p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-indigo-400 text-sm font-medium">
+                        <span>Start Practice</span>
+                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                    </div>
+                </div>
+
+                <!-- CSC 394 Card -->
+                <div onclick="startQuiz('csc394')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-emerald-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-emerald-500/10">
+                    <div>
+                        <div class="inline-block bg-emerald-500/20 text-emerald-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 394 (100 Qs)</div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition">Database Systems</h3>
+                        <p class="text-slate-400 text-sm mt-2">Database fundamentals, relational keys, ERDs, SQL queries & joins, XAMPP/PHP, and ACID transactions.</p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-emerald-400 text-sm font-medium">
+                        <span>Start Practice</span>
+                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                    </div>
+                </div>
+
+                <!-- CSC 396 Card -->
+                <div onclick="startQuiz('csc396')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-amber-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-amber-500/10">
+                    <div>
+                        <div class="inline-block bg-amber-500/20 text-amber-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 396 (450 Qs)</div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Office Applications</h3>
+                        <p class="text-slate-400 text-sm mt-2">Practical skills in Microsoft Word, Excel formulas & functions, and PowerPoint presentation design.</p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-amber-400 text-sm font-medium">
+                        <span>Start Practice</span>
+                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz View -->
+        <div id="quiz-view" class="hidden space-y-6">
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden border border-slate-700">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                <h3 id="question-text" class="text-lg sm:text-xl font-semibold text-white leading-relaxed">Loading question...</h3>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Dynamic Options Inserted Here -->
+                </div>
+
+                <!-- Explanation Box -->
+                <div id="explanation-box" class="hidden p-4 rounded-xl text-sm border transition-all duration-300">
+                    <p id="explanation-text" class="font-medium"></p>
+                </div>
+            </div>
+
+            <!-- Action Footer -->
+            <div class="flex justify-between items-center">
+                <button onclick="returnToDashboard()" class="text-slate-400 hover:text-white text-sm font-medium transition flex items-center space-x-1">
+                    <span>← Exit to Dashboard</span>
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/30">
+                    Next Question →
+                </button>
+            </div>
+        </div>
+
+        <!-- Results View -->
+        <div id="results-view" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6 shadow-2xl max-w-xl mx-auto">
+            <div class="w-20 h-20 bg-indigo-600/20 text-indigo-400 rounded-full flex items-center justify-center mx-auto text-3xl font-bold border border-indigo-500/30">
+                🏆
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-2xl font-bold text-white">Quiz Completed!</h2>
+                <p class="text-slate-400">Fantastic work working through the complete question bank.</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-700 rounded-xl p-6 max-w-xs mx-auto space-y-2">
+                <p class="text-sm text-slate-400">Your Final Score</p>
+                <p id="final-score-display" class="text-4xl font-extrabold text-indigo-400">0 / 0</p>
+                <p id="score-percentage" class="text-xs text-emerald-400 font-semibold"></p>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+                <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-indigo-600/30">
+                    Try Again
+                </button>
+                <button onclick="returnToDashboard()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl transition">
+                    Choose Another Course
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 border-t border-slate-700 py-4 px-6 text-center text-xs text-slate-400">
+        <p>Complete Academic Quiz Hub • Contains all 650 questions from CSC 392, CSC 394 & CSC 396</p>
+    </footer>
+
+    <!-- Full Datasets Script -->
+    <script>
+        const courseData = {
+            csc392: {
+                name: "CSC 392: Software Development",
+                questions: [
+                    { q: "What is software engineering?", opts: ["The process of repairing computer hardware", "The systematic application of engineering principles to software development", "The process of designing computer networks", "The process of manufacturing processors"], ans: 1, exp: "Software engineering is the systematic application of engineering principles to software development[cite: 1]." },
+                    { q: "Which of the following best describes software?", opts: ["Physical components of a computer", "A collection of programs, procedures and related data", "Electrical components used in computers", "Computer accessories"], ans: 1, exp: "Software is a collection of programs, procedures and related data[cite: 1]." },
+                    { q: "What does SDLC stand for?", opts: ["Software Design and Learning Cycle", "System Development Language Code", "Software Development Life Cycle", "Software Data Linking Concept"], ans: 2, exp: "SDLC stands for Software Development Life Cycle[cite: 1]." },
+                    { q: "Which SDLC phase involves identifying what users need from a system?", opts: ["Maintenance", "Requirements analysis", "Deployment", "Implementation"], ans: 1, exp: "Requirements analysis involves identifying what users need[cite: 1]." },
+                    { q: "Which phase involves translating system requirements into a technical structure?", opts: ["Design", "Testing", "Maintenance", "Deployment"], ans: 0, exp: "Design translates system requirements into a technical structure[cite: 1]." },
+                    { q: "What happens during software implementation?", opts: ["Requirements are collected", "The software is coded and developed", "The software is retired", "Users evaluate the requirements"], ans: 1, exp: "Implementation involves coding and developing the software[cite: 1]." },
+                    { q: "Which SDLC phase checks whether software works correctly?", opts: ["Design", "Testing", "Planning", "Deployment"], ans: 1, exp: "Testing checks whether software works correctly[cite: 1]." },
+                    { q: "Deployment refers to:", opts: ["Writing source code", "Releasing software into its intended environment", "Identifying user requirements", "Removing database records"], ans: 1, exp: "Deployment refers to releasing software into its intended environment[cite: 1]." },
+                    { q: "Software maintenance involves:", opts: ["Building computer hardware", "Modifying and supporting software after release", "Collecting requirements only", "Designing the user interface only"], ans: 1, exp: "Maintenance involves modifying and supporting software after release[cite: 1]." },
+                    { q: "Which of these is NOT a common SDLC phase?", opts: ["Requirements analysis", "Design", "Testing", "Processor manufacturing"], ans: 3, exp: "Processor manufacturing is a hardware process, not an SDLC phase[cite: 1]." },
+                    { q: "Which software development model follows a largely sequential approach?", opts: ["Agile", "Waterfall", "Spiral", "Prototype"], ans: 1, exp: "Waterfall follows a largely sequential approach[cite: 1]." },
+                    { q: "Which development model emphasises iterative development and frequent feedback?", opts: ["Waterfall", "Agile", "Big Bang", "Linear"], ans: 1, exp: "Agile emphasises iterative development and frequent feedback[cite: 1]." },
+                    { q: "What is the main purpose of requirements gathering?", opts: ["To write the source code", "To understand stakeholder needs", "To install the application", "To remove software errors"], ans: 1, exp: "Requirements gathering aims to understand stakeholder needs[cite: 1]." },
+                    { q: "Who are stakeholders in software development?", opts: ["Only software developers", "People or groups affected by or interested in the system", "Only computer manufacturers", "Only system administrators"], ans: 1, exp: "Stakeholders are people or groups affected by or interested in the system[cite: 1]." },
+                    { q: "Which of the following is a functional requirement?", opts: ["The system must load within two seconds", "The system must allow users to log in", "The system must be highly available", "The system must support 10,000 users"], ans: 1, exp: "Allowing users to log in is a functional requirement[cite: 1]." },
+                    { q: "Which of the following is a non-functional requirement?", opts: ["Users can register accounts", "Administrators can delete records", "The application must respond within two seconds", "Users can submit forms"], ans: 2, exp: "Response time is a non-functional performance requirement[cite: 1]." },
+                    { q: "What does SRS stand for?", opts: ["Software Requirement Specification", "System Resource Structure", "Software Runtime System", "System Requirements Software"], ans: 0, exp: "SRS stands for Software Requirement Specification[cite: 1]." },
+                    { q: "Which is a characteristic of a good SRS?", opts: ["Ambiguous", "Incomplete", "Consistent", "Unverifiable"], ans: 2, exp: "A good SRS must be consistent[cite: 1]." },
+                    { q: "Which technique involves asking stakeholders questions directly?", opts: ["Interview", "Compilation", "Debugging", "Deployment"], ans: 0, exp: "Interviews involve asking stakeholders questions directly[cite: 1]." },
+                    { q: "What is scope creep?", opts: ["Removing unnecessary code", "Uncontrolled expansion of project requirements", "Testing software repeatedly", "Reducing project costs"], ans: 1, exp: "Scope creep is the uncontrolled expansion of project requirements[cite: 1]." },
+                    { q: "Which of the following is a software design activity?", opts: ["Defining system architecture", "Replacing a processor", "Formatting a hard drive", "Installing a keyboard"], ans: 0, exp: "Defining system architecture is a design activity[cite: 1]." },
+                    { q: "High-level design primarily focuses on:", opts: ["Individual lines of code", "Overall system architecture and components", "Variable naming", "Typing source code"], ans: 1, exp: "High-level design focuses on overall system architecture and components[cite: 1]." },
+                    { q: "Low-level design focuses on:", opts: ["Detailed component logic and implementation", "Business strategy only", "Hardware manufacturing", "User recruitment"], ans: 0, exp: "Low-level design focuses on detailed component logic[cite: 1]." },
+                    { q: "What is modularity?", opts: ["Combining all code into one file", "Dividing a system into manageable components", "Removing all functions", "Avoiding software documentation"], ans: 1, exp: "Modularity means dividing a system into manageable components[cite: 1]." },
+                    { q: "Cohesion describes:", opts: ["How closely related the responsibilities within a module are", "How many computers are connected", "The speed of a processor", "The number of programming languages used"], ans: 0, exp: "Cohesion describes how closely related responsibilities within a module are[cite: 1]." },
+                    { q: "Coupling refers to:", opts: ["The relationship and dependency between software modules", "The number of users in a system", "The size of a database", "The colour of an interface"], ans: 0, exp: "Coupling refers to dependencies between modules[cite: 1]." },
+                    { q: "Good software design generally aims for:", opts: ["Low cohesion and high coupling", "High cohesion and low coupling", "High coupling and low modularity", "No separation of responsibilities"], ans: 1, exp: "Good design aims for high cohesion and low coupling[cite: 1]." },
+                    { q: "What is software implementation?", opts: ["Converting a design into working software", "Collecting user opinions", "Retiring an application", "Writing project proposals only"], ans: 0, exp: "Implementation converts a design into working software[cite: 1]." },
+                    { q: "Which practice helps improve code quality?", opts: ["Avoiding testing", "Using meaningful variable names", "Writing all code in one function", "Ignoring errors"], ans: 1, exp: "Using meaningful variable names improves code quality[cite: 1]." },
+                    { q: "What is debugging?", opts: ["Designing a database", "Identifying and correcting errors in a program", "Installing software", "Creating user accounts"], ans: 1, exp: "Debugging is identifying and correcting errors in a program[cite: 1]." },
+                    { q: "What is software testing?", opts: ["Checking software against expected requirements and behaviour", "Manufacturing computer components", "Creating advertisements", "Formatting documents"], ans: 0, exp: "Testing checks software against expected requirements[cite: 1]." },
+                    { q: "Unit testing focuses on:", opts: ["The complete organisation", "Individual components or functions", "The entire internet", "Hardware installation"], ans: 1, exp: "Unit testing focuses on individual components or functions[cite: 1]." },
+                    { q: "Integration testing checks:", opts: ["Individual variables only", "Whether combined components work together", "The appearance of a computer", "The speed of typing"], ans: 1, exp: "Integration testing checks whether combined components work together[cite: 1]." },
+                    { q: "System testing evaluates:", opts: ["The complete integrated software system", "One variable", "A single line of code only", "The computer’s battery"], ans: 0, exp: "System testing evaluates the complete integrated software system[cite: 1]." },
+                    { q: "Acceptance testing determines whether:", opts: ["The software meets agreed user or customer requirements", "The computer has enough RAM", "Developers understand HTML", "The source code has no comments"], ans: 0, exp: "Acceptance testing determines whether software meets user requirements[cite: 1]." },
+                    { q: "Regression testing is performed to:", opts: ["Check whether changes have broken existing functionality", "Delete old software", "Replace the operating system", "Collect requirements"], ans: 0, exp: "Regression testing checks whether changes break existing functionality[cite: 1]." },
+                    { q: "Verification asks:", opts: ["Are we building the product right?", "Are we buying the right computer?", "Are users online?", "Is the database large enough?"], ans: 0, exp: "Verification asks: Are we building the product right?[cite: 1]" },
+                    { q: "Validation asks:", opts: ["Is the source code formatted?", "Are we building the right product for users?", "Is the processor functioning?", "Is the computer connected to electricity?"], ans: 1, exp: "Validation asks: Are we building the right product for users?[cite: 1]" },
+                    { q: "Black-box testing focuses mainly on:", opts: ["Internal code structure", "Observable inputs and outputs", "Programming language syntax only", "Hardware components"], ans: 1, exp: "Black-box testing focuses on observable inputs and outputs[cite: 1]." },
+                    { q: "White-box testing involves knowledge of:", opts: ["Internal code structure and logic", "User passwords", "Computer prices", "Software advertisements"], ans: 0, exp: "White-box testing involves knowledge of internal code structure[cite: 1]." },
+                    { q: "What is deployment?", opts: ["Releasing software for use", "Writing an algorithm", "Gathering requirements", "Removing variables"], ans: 0, exp: "Deployment is releasing software for use[cite: 1]." },
+                    { q: "Corrective maintenance involves:", opts: ["Fixing discovered faults", "Adding unrelated hardware", "Changing the company name", "Removing all features"], ans: 0, exp: "Corrective maintenance involves fixing discovered faults[cite: 1]." },
+                    { q: "Adaptive maintenance involves:", opts: ["Modifying software to work in a changed environment", "Correcting spelling only", "Removing the database", "Deleting user accounts"], ans: 0, exp: "Adaptive maintenance modifies software to work in a changed environment[cite: 1]." },
+                    { q: "Perfective maintenance aims to:", opts: ["Improve performance or functionality", "Destroy existing features", "Stop software development", "Replace all users"], ans: 0, exp: "Perfective maintenance aims to improve performance or functionality[cite: 1]." },
+                    { q: "Preventive maintenance aims to:", opts: ["Reduce the likelihood of future problems", "Introduce unnecessary errors", "Remove documentation", "Stop testing"], ans: 0, exp: "Preventive maintenance reduces the likelihood of future problems[cite: 1]." },
+                    { q: "A programming language is:", opts: ["A physical computer component", "A formal language used to express instructions for computers", "A type of monitor", "A networking cable"], ans: 1, exp: "A programming language is a formal language for computer instructions[cite: 1]." },
+                    { q: "Syntax refers to:", opts: ["The meaning of a program", "The grammatical rules and structure of a language", "The speed of a computer", "The storage capacity of a computer"], ans: 1, exp: "Syntax refers to grammatical rules and structure[cite: 1]." },
+                    { q: "Semantics refers to:", opts: ["The meaning or behaviour of program statements", "The colour of source code", "The size of a keyboard", "The number of files"], ans: 0, exp: "Semantics refers to the meaning or behaviour of program statements[cite: 1]." },
+                    { q: "Which language is closest to the hardware?", opts: ["High-level language", "Machine language", "English", "JavaScript"], ans: 1, exp: "Machine language is closest to the hardware[cite: 1]." },
+                    { q: "Which is an example of a high-level programming language?", opts: ["Java", "Machine code", "Binary instruction patterns", "Processor microcode"], ans: 0, exp: "Java is a high-level programming language[cite: 1]." },
+                    { q: "What does a compiler do?", opts: ["Translates source code into another representation", "Repairs computer screens", "Deletes program files", "Connects computers to Wi-Fi"], ans: 0, exp: "A compiler translates source code into another representation[cite: 1]." },
+                    { q: "An interpreter generally:", opts: ["Executes a program or representation at runtime", "Manufactures computer hardware", "Creates database tables automatically", "Replaces the operating system"], ans: 0, exp: "An interpreter executes a program or representation at runtime[cite: 1]." },
+                    { q: "An assembler translates:", opts: ["High-level code into English", "Assembly language into machine or object code", "HTML into CSS", "Images into videos"], ans: 1, exp: "An assembler translates assembly into machine or object code[cite: 1]." },
+                    { q: "Which of these is a common compilation stage?", opts: ["Lexical analysis", "Screen calibration", "Battery charging", "File compression only"], ans: 0, exp: "Lexical analysis is a compilation stage[cite: 1]." },
+                    { q: "Parsing is concerned with:", opts: ["Analysing the grammatical structure of source code", "Connecting to a database", "Formatting a hard drive", "Installing a program"], ans: 0, exp: "Parsing analyzes grammatical structure[cite: 1]." },
+                    { q: "Semantic analysis checks:", opts: ["Whether program constructs are meaningful according to language rules", "Whether a keyboard works", "Whether the screen is bright", "Whether a file is downloaded"], ans: 0, exp: "Semantic analysis checks if program constructs follow language rules[cite: 1]." },
+                    { q: "What is dynamic translation?", opts: ["Translating program code during execution", "Translating English into French", "Converting images into text", "Changing a computer’s operating system"], ans: 0, exp: "Dynamic translation translates program code during execution[cite: 1]." },
+                    { q: "What does JIT stand for?", opts: ["Java Internal Technology", "Just-In-Time", "Joint Interface Translation", "Java Integrated Testing"], ans: 1, exp: "JIT stands for Just-In-Time[cite: 1]." },
+                    { q: "JIT compilation generally occurs:", opts: ["During program execution", "Before a computer is manufactured", "Only when a file is deleted", "During hardware installation"], ans: 0, exp: "JIT compilation occurs during program execution[cite: 1]." },
+                    { q: "Java source files commonly use which extension?", opts: [".html", ".java", ".css", ".exe"], ans: 1, exp: "Java source files use .java[cite: 1]." },
+                    { q: "Java source code is commonly compiled into:", opts: ["JVM bytecode", "HTML", "CSS", "SQL"], ans: 0, exp: "Java source code compiles into JVM bytecode[cite: 1]." },
+                    { q: "Which component executes Java bytecode?", opts: ["BIOS", "JVM", "HTML parser", "CSS engine"], ans: 1, exp: "The JVM executes Java bytecode[cite: 1]." },
+                    { q: "JVM stands for:", opts: ["Java Variable Method", "Java Virtual Machine", "Joint Virtual Memory", "Java Visual Module"], ans: 1, exp: "JVM stands for Java Virtual Machine[cite: 1]." },
+                    { q: "Which of the following is a statically typed language?", opts: ["Java", "HTML", "CSS", "Plain text"], ans: 0, exp: "Java is statically typed[cite: 1]." },
+                    { q: "What is a variable?", opts: ["A named storage location or binding for a value", "A physical computer part", "A type of database", "A programming error"], ans: 0, exp: "A variable is a named storage location for a value[cite: 1]." },
+                    { q: "What is a constant?", opts: ["A value or variable that cannot be reassigned in its context", "A variable that changes every second", "A deleted variable", "A programming language"], ans: 0, exp: "A constant cannot be reassigned[cite: 1]." },
+                    { q: "Initialisation means:", opts: ["Giving a variable its initial value", "Removing a variable", "Printing a variable", "Changing the programming language"], ans: 0, exp: "Initialisation gives a variable its initial value[cite: 1]." },
+                    { q: "Assignment means:", opts: ["Giving or setting a value for a variable", "Installing a compiler", "Creating a folder", "Deleting a program"], ans: 0, exp: "Assignment sets or updates a variable's value[cite: 1]." },
+                    { q: "Which of these is a Java primitive data type?", opts: ["String", "int", "Scanner", "System"], ans: 1, exp: "int is a primitive data type[cite: 1]." },
+                    { q: "Which of these is NOT a Java primitive data type?", opts: ["int", "boolean", "double", "String"], ans: 3, exp: "String is a class reference type, not a primitive[cite: 1]." },
+                    { q: "What does null generally represent in Java?", opts: ["Numeric zero", "Absence of an object reference", "An empty number", "A true value"], ans: 1, exp: "null represents the absence of an object reference[cite: 1]." },
+                    { q: "What does an empty string (\"\") represent?", opts: ["A string containing no characters", "A numeric zero", "A null reference", "A Boolean value"], ans: 0, exp: "An empty string contains zero characters[cite: 1]." },
+                    { q: "What is the difference between scope and lifetime?", opts: ["Scope concerns accessibility; lifetime concerns existence duration", "They mean exactly the same thing", "Scope concerns computer speed", "Lifetime concerns variable names only"], ans: 0, exp: "Scope is accessibility; lifetime is existence duration[cite: 1]." },
+                    { q: "A syntax error occurs when:", opts: ["Code violates language grammar or rules", "A program produces the correct output", "A computer shuts down normally", "A user opens a website"], ans: 0, exp: "Syntax errors violate language grammar or rules[cite: 1]." },
+                    { q: "A logic error occurs when:", opts: ["A program runs but produces an incorrect result", "The computer has no keyboard", "A file is saved successfully", "A program has comments"], ans: 0, exp: "Logic errors occur when a program runs but gives incorrect results[cite: 1]." },
+                    { q: "What does OOP stand for?", opts: ["Object-Oriented Programming", "Online Operating Process", "Open Object Protocol", "Operational Output Programming"], ans: 0, exp: "OOP stands for Object-Oriented Programming[cite: 1]." },
+                    { q: "OOP organises programs mainly around:", opts: ["Objects", "Cables", "Folders", "Operating systems"], ans: 0, exp: "OOP organises programs around objects[cite: 1]." },
+                    { q: "A class is:", opts: ["A blueprint for creating objects", "A physical computer", "A database record only", "A programming error"], ans: 0, exp: "A class is a blueprint for creating objects[cite: 1]." },
+                    { q: "An object is:", opts: ["An instance of a class", "A type of compiler", "A programming language", "A database server"], ans: 0, exp: "An object is an instance of a class[cite: 1]." },
+                    { q: "Which OOP concept combines data and methods within a unit?", opts: ["Encapsulation", "Compilation", "Interpretation", "Deployment"], ans: 0, exp: "Encapsulation combines data and methods[cite: 1]." },
+                    { q: "Encapsulation helps to:", opts: ["Control access to an object’s internal data", "Remove all methods", "Increase code duplication", "Stop object creation"], ans: 0, exp: "Encapsulation controls access to internal data[cite: 1]." },
+                    { q: "Abstraction focuses on:", opts: ["Showing essential features while hiding unnecessary implementation details", "Displaying every internal operation", "Removing all classes", "Repeating code"], ans: 0, exp: "Abstraction hides unnecessary implementation details[cite: 1]." },
+                    { q: "Inheritance allows:", opts: ["A class to acquire or extend features from another class", "A program to delete itself", "A database to create users", "A method to become a variable"], ans: 0, exp: "Inheritance allows classes to acquire features from another class[cite: 1]." },
+                    { q: "Polymorphism means:", opts: ["One interface or operation can have different behaviours", "A class cannot have methods", "Every object must be identical", "A program cannot use inheritance"], ans: 0, exp: "Polymorphism means one interface can have different behaviours[cite: 1]." },
+                    { q: "Which is NOT one of the four commonly taught pillars of OOP?", opts: ["Encapsulation", "Inheritance", "Abstraction", "Compilation"], ans: 3, exp: "Compilation is not an OOP pillar[cite: 1]." },
+                    { q: "A constructor is generally used to:", opts: ["Initialise a newly created object", "Delete the operating system", "Compile HTML", "Connect a monitor"], ans: 0, exp: "A constructor initialises a newly created object[cite: 1]." },
+                    { q: "Which access modifier generally allows access only within the class in Java?", opts: ["public", "private", "protected", "static"], ans: 1, exp: "private allows access only within the class[cite: 1]." },
+                    { q: "Method overloading involves:", opts: ["Methods with the same name but different parameter lists", "Deleting a method", "Giving every method the same body", "Preventing method calls"], ans: 0, exp: "Overloading involves methods with the same name and different parameters[cite: 1]." },
+                    { q: "Method overriding occurs when:", opts: ["A subclass provides its own implementation of an inherited method", "A variable is deleted", "A constructor is removed", "A class has no methods"], ans: 0, exp: "Overriding occurs when a subclass implements its own inherited method[cite: 1]." },
+                    { q: "Which concept supports code reusability through class relationships?", opts: ["Inheritance", "Syntax", "Parsing", "Debugging"], ans: 0, exp: "Inheritance supports code reusability[cite: 1]." },
+                    { q: "Which language commonly executes through the .NET runtime?", opts: ["C#", "HTML", "CSS", "SQL"], ans: 0, exp: "C# executes through the .NET runtime[cite: 1]." },
+                    { q: "Which language commonly uses the Java Virtual Machine?", opts: ["Java", "C", "HTML", "CSS"], ans: 0, exp: "Java uses the JVM[cite: 1]." },
+                    { q: "Which language supports multiple inheritance of classes?", opts: ["Java", "C#", "C++", "None of the above"], ans: 2, exp: "C++ supports multiple inheritance[cite: 1]." },
+                    { q: "Which keyword is commonly used to create an object in Java?", opts: ["create", "new", "object", "make"], ans: 1, exp: "The 'new' keyword creates objects in Java[cite: 1]." },
+                    { q: "What is the output of the following Java code? int x = 9; System.out.println(x / 2);", opts: ["4.5", "5", "4", "2"], ans: 2, exp: "Integer division 9 / 2 results in 4[cite: 1]." },
+                    { q: "What is the output? System.out.println(\"A\" + 2 + 3);", opts: ["A5", "A23", "5A", "23A"], ans: 1, exp: "\"A\" + 2 results in \"A2\", then + 3 results in \"A23\"[cite: 1]." },
+                    { q: "What is the output? System.out.println(\"A\" + (2 + 3));", opts: ["A23", "A5", "5A", "23"], ans: 1, exp: "Parentheses evaluate 2 + 3 = 5, yielding \"A5\"[cite: 1]." },
+                    { q: "What is the output? int total = 0; for (int i = 1; i <= 4; i++) { total += i; } System.out.println(total);", opts: ["4", "6", "10", "15"], ans: 2, exp: "1 + 2 + 3 + 4 = 10[cite: 1]." },
+                    { q: "In Java, attempting to access a member through a null reference typically causes:", opts: ["ArithmeticException", "NullPointerException", "IOException", "SyntaxException"], ans: 1, exp: "Accessing members through null causes NullPointerException[cite: 1]." },
+                    { q: "If a code question contains an unfamiliar method such as ToPossiblyUpper(), what should you do first?", opts: ["Assume it is a built-in Java method", "Check whether it is defined or provided by an available library", "Assume it always returns a number", "Ignore the method completely"], ans: 1, exp: "Check whether it is defined or provided by an available library[cite: 1]." }
+                ]
+            },
+            csc394: {
+                name: "CSC 394: Database Systems",
+                questions: [
+                    { q: "A database is best described as:", opts: ["A computer’s operating system", "An organised collection of related data", "A collection of unrelated programs", "A device for printing documents"], ans: 1, exp: "A database is an organised collection of related data[cite: 3]." },
+                    { q: "What is the main role of a DBMS?", opts: ["To manufacture computer hardware", "To replace the internet", "To manage and control access to databases", "To design presentation slides"], ans: 2, exp: "A DBMS manages databases and controls access to stored data[cite: 3]." },
+                    { q: "Which of the following is an example of a DBMS?", opts: ["HTML", "CSS", "PowerPoint", "MySQL"], ans: 3, exp: "MySQL is database management software[cite: 3]." },
+                    { q: "Which of these is commonly listed as a component of a database system?", opts: ["Procedures", "Wallpaper", "Screen brightness", "Computer casing colour"], ans: 0, exp: "Procedures are instructions for operating and maintaining a database system[cite: 3]." },
+                    { q: "Hardware in a database system refers to:", opts: ["Stored records", "Backup instructions", "Physical devices such as servers and storage", "Database users"], ans: 2, exp: "Hardware refers to physical equipment such as servers and storage devices[cite: 3]." },
+                    { q: "Which component provides rules for operating and maintaining a database?", opts: ["Data", "Procedures", "Hardware", "Attributes"], ans: 1, exp: "Procedures provide rules and instructions for database operations[cite: 3]." },
+                    { q: "Who commonly manages database security, backups and performance?", opts: ["Web browser", "Printer driver", "End user only", "Database administrator"], ans: 3, exp: "A Database Administrator manages security, backups and performance[cite: 3]." },
+                    { q: "A major benefit of a DBMS over separate file systems is:", opts: ["Improved data sharing and control", "More uncontrolled duplication", "No need for security", "Guaranteed absence of errors"], ans: 0, exp: "A DBMS supports controlled data sharing and centralised management[cite: 3]." },
+                    { q: "Data redundancy means:", opts: ["Conflicting copies of data", "Unnecessary duplication of data", "Encrypted data", "Data sorted by date"], ans: 1, exp: "Redundancy means unnecessary duplication of data[cite: 3]." },
+                    { q: "Data inconsistency occurs when:", opts: ["Every copy has the same value", "A table has a primary key", "Different copies of the same data disagree", "A backup is created"], ans: 2, exp: "Inconsistency occurs when different copies of the same information disagree[cite: 3]." },
+                    { q: "Separate hostel, library and accounts files storing the same student details may cause:", opts: ["Data normalisation", "Automatic synchronisation", "Data independence", "Data redundancy"], ans: 3, exp: "Storing the same student details in several separate files creates duplication[cite: 3]." },
+                    { q: "A phone number updated by the Academic Office but not the Library is an example of:", opts: ["Data inconsistency", "Data encryption", "A candidate key", "A SQL join"], ans: 0, exp: "The departments now have conflicting versions of the phone number[cite: 3]." },
+                    { q: "Data isolation in file-based systems means:", opts: ["All information is in one central table", "Data is scattered across separate files and formats", "Every file is automatically connected", "Data is always public"], ans: 1, exp: "Data isolation occurs when information is separated across different files and formats[cite: 3]." },
+                    { q: "Which is a likely disadvantage of separate departmental file systems?", opts: ["Automatic institution-wide reporting", "Guaranteed integrity", "Difficult data sharing", "Automatic backup coordination"], ans: 2, exp: "Separate systems make it difficult to share information[cite: 3]." },
+                    { q: "A DBMS can support data integrity through:", opts: ["Removing all validation", "Allowing every duplicate identifier", "Disabling data types", "Constraints such as PRIMARY KEY and NOT NULL"], ans: 3, exp: "Constraints such as PRIMARY KEY and NOT NULL help enforce data rules[cite: 3]." },
+                    { q: "Which statement correctly distinguishes a database from a DBMS?", opts: ["The database is the data; the DBMS is software that manages it", "They are always the same thing", "A DBMS is a keyboard", "A database is only a spreadsheet"], ans: 0, exp: "A database contains the data; a DBMS is the software that manages it[cite: 3]." },
+                    { q: "A table in a relational database is also called a:", opts: ["Browser", "Procedure", "Relation", "Server"], ans: 2, exp: "A relational table is formally called a relation[cite: 3]." },
+                    { q: "A row in a relational table is called a:", opts: ["Attribute", "Tuple or record", "Schema", "Domain"], ans: 1, exp: "A tuple or record represents one row in a table[cite: 3]." },
+                    { q: "A column in a relational table is called an:", opts: ["Tuple", "Transaction", "Database instance", "Attribute or field"], ans: 3, exp: "An attribute or field represents a column[cite: 3]." },
+                    { q: "Which key uniquely identifies each row in a table?", opts: ["Primary key", "Foreign key", "Sort key", "Duplicate key"], ans: 0, exp: "A primary key uniquely identifies each record[cite: 3]." },
+                    { q: "A primary key must be:", opts: ["Allowed to contain duplicates", "The same in every table", "Unique and NOT NULL", "A person’s name"], ans: 2, exp: "Primary keys must be unique and cannot contain NULL values[cite: 3]." },
+                    { q: "A super key is:", opts: ["A key that must contain two columns", "Any attribute set that uniquely identifies a row", "A key used only for sorting", "A duplicated value"], ans: 1, exp: "A super key is any set of attributes capable of uniquely identifying a row[cite: 3]." },
+                    { q: "A candidate key is:", opts: ["A minimal super key", "A super key with unnecessary attributes", "A key that permits duplicates", "A key used only by another database"], ans: 0, exp: "A candidate key is a minimal super key[cite: 3]." },
+                    { q: "If StudentID and Email are both unique and minimal, they are:", opts: ["Foreign keys automatically", "Duplicate records", "Database instances", "Candidate keys"], ans: 3, exp: "Both StudentID and Email can independently identify a student[cite: 3]." },
+                    { q: "The candidate key selected as the main identifier is the:", opts: ["Foreign key", "Primary key", "Composite attribute", "Relational instance"], ans: 1, exp: "The selected candidate key becomes the primary key[cite: 3]." },
+                    { q: "A foreign key is mainly used to:", opts: ["Encrypt a table", "Rename a column", "Link related tables", "Sort rows alphabetically"], ans: 2, exp: "Foreign keys establish relationships between tables[cite: 3]." },
+                    { q: "If STAFF.DepartmentID references DEPARTMENT.DepartmentID, STAFF.DepartmentID is a:", opts: ["Table name", "Candidate key necessarily", "SQL command", "Foreign key"], ans: 3, exp: "STAFF.DepartmentID references the department identifier in another table[cite: 3]." },
+                    { q: "A key made up of two or more attributes is a:", opts: ["Composite key", "Foreign server", "Simple row", "Null key"], ans: 0, exp: "A composite key consists of two or more attributes[cite: 3]." },
+                    { q: "Which statement about foreign keys is correct?", opts: ["They must always be unique", "They can contain repeated values", "They must always be the table’s primary key", "They cannot reference another table"], ans: 1, exp: "Foreign-key values can repeat when several records reference the same parent record[cite: 3]." },
+                    { q: "Referential integrity helps ensure that:", opts: ["All tables have equal row counts", "All columns contain text", "Foreign-key references point to valid referenced records", "Tables cannot be joined"], ans: 2, exp: "Referential integrity helps prevent invalid references between related tables[cite: 3]." },
+                    { q: "A relational schema describes:", opts: ["Only the current values in every row", "The colour of the application", "The monitor’s physical size", "The structure of relations, attributes and constraints"], ans: 3, exp: "A schema describes the database structure, attributes and constraints[cite: 3]." },
+                    { q: "A relational instance refers to:", opts: ["The actual data stored at a particular time", "The table design only", "A database password", "A programming language"], ans: 0, exp: "An instance is the actual data stored at a particular time[cite: 3]." },
+                    { q: "What does ERD stand for?", opts: ["Electronic Record Device", "External Retrieval Data", "Entity Relationship Diagram", "Entity Record Driver"], ans: 2, exp: "ERD means Entity Relationship Diagram[cite: 3]." },
+                    { q: "The main purpose of an ERD is to:", opts: ["Execute PHP code", "Visually model entities, attributes and relationships", "Format a hard drive", "Replace SQL"], ans: 1, exp: "ERDs visually represent entities, attributes and relationships[cite: 3]." },
+                    { q: "An entity represents:", opts: ["A mathematical operator", "A database password", "A web browser", "A distinguishable object or concept about which data is stored"], ans: 3, exp: "An entity is an identifiable object or concept about which data is stored[cite: 3]." },
+                    { q: "An attribute represents:", opts: ["A property of an entity", "A connection cable", "A server process", "A query result only"], ans: 0, exp: "Attributes describe the properties of entities[cite: 3]." },
+                    { q: "Which is an example of an attribute of STAFF?", opts: ["MySQL server", "Apache service", "StaffName", "Browser tab"], ans: 2, exp: "StaffName describes a staff member[cite: 3]." },
+                    { q: "A relationship in an ERD shows:", opts: ["The font used in a database", "How entities are associated", "Computer memory size", "SQL keyword order"], ans: 1, exp: "Relationships show how entities are associated with one another[cite: 3]." },
+                    { q: "A one-to-one relationship means:", opts: ["One row connects to every row", "One department has unlimited students", "There are no entities", "Each instance on either side relates to at most one on the other side"], ans: 3, exp: "A one-to-one relationship associates at most one instance on each side[cite: 3]." },
+                    { q: "A one-to-many relationship means:", opts: ["One instance on one side can relate to many on the other side", "Every entity has no attributes", "Every row must be duplicated", "Both sides contain one record only"], ans: 0, exp: "One department can have multiple staff members[cite: 3]." },
+                    { q: "A many-to-many relationship means:", opts: ["Only one row exists", "One side cannot have a key", "Many instances on each side can relate to many on the other side", "The entities are unrelated"], ans: 2, exp: "Many-to-many means multiple instances on both sides can be associated[cite: 3]." },
+                    { q: "A STUDENT–COURSE many-to-many relationship can be resolved with:", opts: ["A second database password", "An ENROLMENT junction table", "A browser window", "A duplicate Student table only"], ans: 1, exp: "A junction table resolves a many-to-many relationship[cite: 3]." },
+                    { q: "Which schema models one department having many staff?", opts: ["STAFF with no identifier", "DEPARTMENT(StaffName only)", "One table per staff attribute", "DEPARTMENT(DepartmentID PK); STAFF(StaffID PK, DepartmentID FK)"], ans: 3, exp: "The foreign key is placed in STAFF, the many-side of the relationship[cite: 3]." },
+                    { q: "Why is a primary key included in a schema?", opts: ["To uniquely identify each record", "To make all values identical", "To remove all relationships", "To store only images"], ans: 0, exp: "A primary key uniquely identifies each record[cite: 3]." },
+                    { q: "Which SQL command retrieves data?", opts: ["DROP", "ALTER", "SELECT", "CREATE"], ans: 2, exp: "SELECT retrieves information from a database[cite: 3]." },
+                    { q: "In SELECT * FROM EMPLOYEE, the asterisk means:", opts: ["No rows", "All columns", "Delete all columns", "Sort by the first column"], ans: 1, exp: "The asterisk represents all columns[cite: 3]." },
+                    { q: "SELECT SALARY FROM EMPLOYEE returns:", opts: ["Every column in EMPLOYEE", "Only the table definition", "It deletes salary values", "Only the SALARY column for the rows selected"], ans: 3, exp: "Only the SALARY column is returned[cite: 3]." },
+                    { q: "Which command adds a new row?", opts: ["INSERT", "UPDATE", "DELETE", "DROP"], ans: 0, exp: "INSERT adds new records[cite: 3]." },
+                    { q: "Which command modifies existing records?", opts: ["CREATE", "SELECT", "UPDATE", "DROP"], ans: 2, exp: "UPDATE modifies existing records[cite: 3]." },
+                    { q: "Which command removes selected rows?", opts: ["ALTER", "DELETE", "SELECT", "GRANT"], ans: 1, exp: "DELETE removes records[cite: 3]." },
+                    { q: "Which group contains commonly taught DML commands?", opts: ["CREATE, ALTER, DROP", "SELECT, WHERE, ORDER BY", "GRANT, REVOKE, DENY only", "INSERT, UPDATE, DELETE"], ans: 3, exp: "INSERT, UPDATE and DELETE manipulate data[cite: 3]." },
+                    { q: "Which group contains DDL commands?", opts: ["CREATE, ALTER, DROP", "INSERT, UPDATE, DELETE", "SELECT, WHERE, ORDER BY", "COMMIT, ROLLBACK only"], ans: 0, exp: "CREATE, ALTER and DROP are DDL commands[cite: 3]." },
+                    { q: "The WHERE clause is used to:", opts: ["Rename the database server", "Create a database", "Filter rows using a condition", "Display every column automatically"], ans: 2, exp: "WHERE filters records according to a condition[cite: 3]." },
+                    { q: "ORDER BY is used to:", opts: ["Delete duplicate tables", "Sort query results", "Create a primary key automatically", "Connect PHP to MySQL"], ans: 1, exp: "ORDER BY sorts query results[cite: 3]." },
+                    { q: "What is the default ORDER BY direction?", opts: ["DESC", "RANDOM", "NONE", "ASC"], ans: 3, exp: "ASC is the default sorting direction[cite: 3]." },
+                    { q: "GROUP BY is used to:", opts: ["Group rows that share values in specified columns", "Delete grouped records", "Create a server", "Encrypt a table"], ans: 0, exp: "GROUP BY groups records with matching values[cite: 3]." },
+                    { q: "Which function calculates the total of numeric values?", opts: ["COUNT()", "JOIN()", "SUM()", "ORDER()"], ans: 2, exp: "SUM() adds numeric values[cite: 3]." },
+                    { q: "Which query displays three numbers in three columns?", opts: ["SELECT 10 + 20 + 30;", "SELECT 10 AS A, 20 AS B, 30 AS C;", "DELETE 10, 20, 30;", "INSERT 10 20 30;"], ans: 1, exp: "Each expression separated by a comma becomes a result column[cite: 3]." },
+                    { q: "Which query calculates the sum of 10 and 15?", opts: ["SELECT 10, 15 FROM Total;", "INSERT 10 + 15;", "UPDATE Total = 25;", "SELECT 10 + 15 AS Total;"], ans: 3, exp: "The query evaluates 10 + 15 and labels the result Total[cite: 3]." },
+                    { q: "Which query displays only name and commission from Salesman?", opts: ["SELECT name, commission FROM Salesman;", "SELECT * FROM Salesman;", "DELETE name, commission FROM Salesman;", "SHOW name AND commission;"], ans: 0, exp: "The query selects only name and commission[cite: 3]." },
+                    { q: "P_PRICE > 50 AND P_PRICE < 100 selects:", opts: ["Prices equal to 50 or 100 only", "All prices below 50", "Prices strictly between 50 and 100", "All prices above 100"], ans: 2, exp: "Both conditions must be true, so prices must be strictly between 50 and 100[cite: 3]." },
+                    { q: "Which is a common SQL not-equal operator?", opts: ["=>", "<>", "><", "==!"], ans: 1, exp: "<> is the standard SQL not-equal operator[cite: 3]." },
+                    { q: "What may UPDATE EMPLOYEE SET Salary = 50000; do without WHERE?", opts: ["Update only one random row", "Only display data", "Create a new table", "Update every employee row"], ans: 3, exp: "Without WHERE, UPDATE affects every record in the table[cite: 3]." },
+                    { q: "What may DELETE FROM STUDENT; do without WHERE?", opts: ["Delete every row in the table", "Delete only the first row", "Change the table name", "Create a backup"], ans: 0, exp: "Without WHERE, DELETE removes every row but leaves the table structure[cite: 3]." },
+                    { q: "Which statement creates a table?", opts: ["SELECT TABLE Student", "INSERT TABLE Student", "CREATE TABLE Student (…)", "OPEN TABLE Student"], ans: 2, exp: "CREATE TABLE defines a new table[cite: 3]." },
+                    { q: "Which command changes an existing table’s structure?", opts: ["UPDATE ROW", "ALTER TABLE", "SELECT TABLE", "PRINT TABLE"], ans: 1, exp: "ALTER TABLE changes an existing table’s structure[cite: 3]." },
+                    { q: "A SQL JOIN is used to:", opts: ["Delete a database", "Create a PHP file", "Format a document", "Combine related rows from tables"], ans: 3, exp: "JOIN combines related information from multiple tables[cite: 3]." },
+                    { q: "Which join returns only matching rows from both tables?", opts: ["INNER JOIN", "LEFT JOIN", "FULL OUTER JOIN", "CROSS JOIN"], ans: 0, exp: "INNER JOIN returns matching records from both tables[cite: 3]." },
+                    { q: "Which join preserves all rows from the left table?", opts: ["INNER JOIN", "RIGHT JOIN", "LEFT JOIN", "SELF JOIN"], ans: 2, exp: "LEFT JOIN preserves every record from the left table[cite: 3]." },
+                    { q: "Which join preserves all rows from the right table?", opts: ["LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "CROSS JOIN"], ans: 1, exp: "RIGHT JOIN preserves every record from the right table[cite: 3]." },
+                    { q: "A FULL OUTER JOIN returns:", opts: ["Only matching rows", "Only left-table rows", "Only right-table rows", "Matches and unmatched rows from both tables"], ans: 3, exp: "FULL OUTER JOIN includes matching and unmatched records from both tables[cite: 3]." },
+                    { q: "In a FULL OUTER JOIN, missing-side columns contain:", opts: ["NULL", "Automatically generated names", "Always zero", "The word JOIN"], ans: 0, exp: "NULL represents missing matching information[cite: 3]." },
+                    { q: "Which statement about MySQL is correct?", opts: ["It has no JOIN support", "It only supports FULL JOIN", "It does not directly support FULL OUTER JOIN syntax", "It cannot use LEFT JOIN"], ans: 2, exp: "MySQL does not directly support FULL OUTER JOIN syntax[cite: 3]." },
+                    { q: "A common MySQL FULL JOIN workaround is:", opts: ["DROP TABLE plus CREATE TABLE", "LEFT JOIN UNION RIGHT JOIN", "UPDATE plus DELETE", "ORDER BY plus GROUP BY"], ans: 1, exp: "LEFT JOIN UNION RIGHT JOIN is a common workaround[cite: 3]." },
+                    { q: "To show every student even if there is no payment record, use:", opts: ["INNER JOIN only", "RIGHT JOIN with Payments on the right only", "No join", "LEFT JOIN with Students on the left"], ans: 3, exp: "LEFT JOIN keeps every student, even when no payment exists[cite: 3]." },
+                    { q: "The ON clause in a JOIN specifies:", opts: ["The condition used to match rows", "The database name", "A PHP session", "A backup schedule"], ans: 0, exp: "ON specifies the condition used to match records[cite: 3]." },
+                    { q: "XAMPP commonly provides:", opts: ["Only a text editor", "Only a browser", "Apache, PHP and database tools", "A physical database server"], ans: 2, exp: "XAMPP commonly bundles Apache, PHP and database tools[cite: 3]." },
+                    { q: "Which XAMPP component serves HTTP requests?", opts: ["Notepad", "Apache", "Calculator", "File Explorer"], ans: 1, exp: "Apache handles HTTP requests and serves web pages[cite: 3]." },
+                    { q: "The default Windows XAMPP web root is commonly:", opts: ["C:\\Windows\\Fonts", "C:\\Users\\Public\\Music", "Recycle Bin", "C:\\xampp\\htdocs"], ans: 3, exp: "htdocs is the usual document root in a standard Windows XAMPP installation[cite: 3]." },
+                    { q: "A project at htdocs\\hello can commonly be opened using:", opts: ["http://localhost/hello/", "file://hello/index.php", "https://internet/hello/", "ftp://localhost/hello/"], ans: 0, exp: "Apache serves the project through the localhost address[cite: 3]." },
+                    { q: "Localhost refers to:", opts: ["Every computer on the internet", "A remote public website", "The computer currently being used", "A database table"], ans: 2, exp: "Localhost refers to the computer currently being used[cite: 3]." },
+                    { q: "Which IPv4 address is associated with localhost?", opts: ["8.8.8.8", "127.0.0.1", "192.0.2.1", "255.255.255.255"], ans: 1, exp: "127.0.0.1 is the IPv4 loopback address[cite: 3]." },
+                    { q: "Why access PHP through localhost rather than opening it directly as a file?", opts: ["Browsers cannot display HTML", "PHP files are image files", "The file must be emailed first", "PHP needs server-side processing"], ans: 3, exp: "PHP requires server-side processing before its output reaches the browser[cite: 3]." },
+                    { q: "Which PHP statement displays Hello World?", opts: ["echo \"Hello World\";", "printHTML = Hello World", "SELECT Hello World", "SHOW PHP Hello World"], ans: 0, exp: "echo outputs text in PHP[cite: 3]." },
+                    { q: "Which tag begins a PHP code section?", opts: ["<javascript>", "<sql>", "<?php", "<?html"], ans: 2, exp: "<?php opens a PHP code section[cite: 3]." },
+                    { q: "For a PHP application using MySQL in XAMPP, which service must be running?", opts: ["Bluetooth", "MySQL/MariaDB", "Printer spooler", "Audio service"], ans: 1, exp: "The MySQL/MariaDB service must be running for the database connection to work[cite: 3]." },
+                    { q: "A CRON job is:", opts: ["A database column", "A PHP variable type", "An ERD symbol", "A scheduled task that runs automatically"], ans: 3, exp: "CRON is used to schedule tasks to run automatically[cite: 3]." },
+                    { q: "Which is a suitable PHP CRON task?", opts: ["Automatically generating a daily report", "Changing monitor brightness manually", "Drawing an ERD on paper", "Typing a form password"], ans: 0, exp: "Generating reports is repetitive work that can be automated[cite: 3]." },
+                    { q: "The usual crontab schedule contains how many time fields?", opts: ["Two", "Seven", "Five", "Ten"], ans: 2, exp: "A standard crontab schedule has five time fields[cite: 3]." },
+                    { q: "What does 0 2 * * * mean?", opts: ["Every two minutes", "Every day at 2:00 a.m.", "Every Sunday at midnight only", "Every month at 2 p.m."], ans: 1, exp: "The schedule means minute 0, hour 2, every day[cite: 3]." },
+                    { q: "Which command can run a PHP script from cron?", opts: ["SELECT PHP FROM CRON", "OPEN BROWSER PHP", "HTML RUN SCRIPT", "/usr/bin/php /path/to/script.php"], ans: 3, exp: "The PHP command-line interpreter can execute a PHP script from cron[cite: 3]." },
+                    { q: "Which task is suitable for scheduling with cron?", opts: ["Periodic database backup", "Defining an ERD by hand", "Replacing a monitor", "Changing a table font"], ans: 0, exp: "Database backups are suitable for scheduled automation[cite: 3]." },
+                    { q: "What does ACID stand for?", opts: ["Accuracy, Control, Input, Data", "Access, Column, Index, Domain", "Atomicity, Consistency, Isolation, Durability", "Automatic, Central, Integrated, Direct"], ans: 2, exp: "ACID stands for Atomicity, Consistency, Isolation and Durability[cite: 3]." },
+                    { q: "Atomicity means:", opts: ["Every table has one column", "A transaction is all-or-nothing", "Data is always public", "Queries must be alphabetical"], ans: 1, exp: "Atomicity means a transaction succeeds completely or is rolled back[cite: 3]." },
+                    { q: "Consistency means a transaction:", opts: ["Duplicates every record", "Prevents all users logging in", "Removes every constraint", "Moves the database from one valid state to another"], ans: 3, exp: "Consistency ensures transactions preserve database rules[cite: 3]." },
+                    { q: "Isolation means:", opts: ["Concurrent transactions should not interfere improperly", "The database is disconnected permanently", "All data is copied to USB", "Tables cannot be joined"], ans: 0, exp: "Isolation controls how simultaneous transactions affect one another[cite: 3]." },
+                    { q: "Durability means:", opts: ["Uncommitted changes are always saved", "Every record is temporary", "Committed changes persist after a failure, subject to system guarantees", "Tables cannot be backed up"], ans: 2, exp: "Durability means committed changes persist after a failure[cite: 3]." },
+                    { q: "Which statement makes transaction changes permanent?", opts: ["ROLLBACK", "COMMIT", "SELECT", "DESCRIBE"], ans: 1, exp: "COMMIT permanently finalises transaction changes[cite: 3]." },
+                    { q: "Which statement cancels uncommitted transaction changes?", opts: ["COMMIT", "INSERT", "ORDER BY", "ROLLBACK"], ans: 3, exp: "ROLLBACK cancels uncommitted transaction changes[cite: 3]." },
+                    { q: "CRUD stands for:", opts: ["Create, Read, Update, Delete", "Connect, Run, Upload, Download", "Copy, Rename, Undo, Drop", "Compile, Run, Use, Debug"], ans: 0, exp: "CRUD means Create, Read, Update, Delete[cite: 3]." }
+                ]
+            },
+            csc396: {
+                name: "CSC 396: Office Applications",
+                questions: [
+                    // A comprehensive selection covering Word, Excel, and PowerPoint from the 450 questions
+                    { q: "What is Microsoft Word primarily used for?", opts: ["Creating and editing documents", "Managing databases", "Creating animations", "Browsing the internet"], ans: 0, exp: "Microsoft Word is primarily used for creating and editing documents[cite: 2]." },
+                    { q: "What is a document created in Microsoft Word commonly called?", opts: ["Workbook", "Presentation", "Document", "Database"], ans: 2, exp: "A Word file is called a Document[cite: 2]." },
+                    { q: "Which keyboard shortcut creates a new blank document in Word?", opts: ["Ctrl + S", "Ctrl + N", "Ctrl + P", "Ctrl + O"], ans: 1, exp: "Ctrl + N creates a new blank document[cite: 2]." },
+                    { q: "Which shortcut saves a Word document?", opts: ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + S"], ans: 3, exp: "Ctrl + S saves a document[cite: 2]." },
+                    { q: "What does Ctrl + P do in Microsoft Word?", opts: ["Opens the Print window", "Pastes selected text", "Saves a document", "Opens a new document"], ans: 0, exp: "Ctrl + P opens the Print window[cite: 2]." },
+                    { q: "Which tab contains most text-formatting options?", opts: ["Review", "Insert", "Home", "View"], ans: 2, exp: "The Home tab contains most text-formatting options[cite: 2]." },
+                    { q: "Which option changes the appearance of text?", opts: ["Page Number", "Font", "Margins", "Orientation"], ans: 1, exp: "Font changes the appearance of text[cite: 2]." },
+                    { q: "What does font size control?", opts: ["Text colour", "Text alignment", "Page length", "The size of characters"], ans: 3, exp: "Font size controls the size of characters[cite: 2]." },
+                    { q: "Which shortcut makes selected text bold?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + L"], ans: 0, exp: "Ctrl + B makes selected text bold[cite: 2]." },
+                    { q: "Which shortcut italicises selected text?", opts: ["Ctrl + B", "Ctrl + U", "Ctrl + I", "Ctrl + E"], ans: 2, exp: "Ctrl + I italicises selected text[cite: 2]." },
+                    // Excel Questions
+                    { q: "What is Microsoft Excel primarily used for?", opts: ["Creating presentations", "Editing videos", "Processing spreadsheets and performing calculations", "Designing websites"], ans: 2, exp: "Excel is used for processing spreadsheets and calculations[cite: 2]." },
+                    { q: "What is an Excel file commonly called?", opts: ["Workbook", "Document", "Presentation", "Database"], ans: 0, exp: "An Excel file is called a Workbook[cite: 2]." },
+                    { q: "What is the intersection of a row and a column called?", opts: ["Table", "Cell", "Workbook", "Chart"], ans: 1, exp: "The intersection of a row and column is a Cell[cite: 2]." },
+                    { q: "Which character must a formula generally begin with in Excel?", opts: ["#", "=", "@", "&"], ans: 1, exp: "Formulas in Excel must begin with an equals sign (=)[cite: 2]." },
+                    { q: "Which function adds a range of numbers?", opts: ["COUNT", "MAX", "SUM", "MIN"], ans: 2, exp: "SUM adds a range of numbers[cite: 2]." },
+                    { q: "Which formula calculates the average of A1 to A5?", opts: ["=SUM(A1:A5)", "=AVERAGE(A1:A5)", "=COUNT(A1:A5)", "=MAX(A1:A5)"], ans: 1, exp: "=AVERAGE(A1:A5) calculates the average[cite: 2]." },
+                    { q: "What is a relative cell reference?", opts: ["A reference that changes when copied to another cell", "A reference that never changes", "A reference that contains only text", "A reference to another workbook only"], ans: 0, exp: "Relative references change when copied[cite: 2]." },
+                    { q: "Which of the following is an absolute cell reference?", opts: ["A1", "A$1", "$A$1", "$A1"], ans: 2, exp: "$A$1 is an absolute reference[cite: 2]." },
+                    // PowerPoint Questions
+                    { q: "What is Microsoft PowerPoint primarily used for?", opts: ["Database management", "Spreadsheet calculations", "Creating presentations", "Writing programming code"], ans: 2, exp: "PowerPoint is used for creating presentations[cite: 2]." },
+                    { q: "What is an individual page in a PowerPoint presentation called?", opts: ["Slide", "Sheet", "Document", "Record"], ans: 0, exp: "An individual presentation page is a Slide[cite: 2]." },
+                    { q: "Which key starts a slide show from the beginning?", opts: ["F2", "F5", "F7", "F12"], ans: 1, exp: "F5 starts a slide show from the beginning[cite: 2]." },
+                    { q: "Which shortcut starts a slide show from the current slide?", opts: ["Ctrl + F5", "Alt + F5", "Shift + F5", "Ctrl + Shift + S"], ans: 2, exp: "Shift + F5 starts from the current slide[cite: 2]." },
+                    { q: "What is the standard widescreen slide aspect ratio commonly used in modern presentations?", opts: ["4:3", "1:1", "3:2", "16:9"], ans: 3, exp: "16:9 is the standard widescreen aspect ratio[cite: 2]." }
+                ]
+            }
+        };
+
+        let currentCourseKey = '';
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answeredCurrent = false;
+
+        function startQuiz(courseKey) {
+            currentCourseKey = courseKey;
+            currentQuestions = [...courseData[courseKey].questions];
+            currentIndex = 0;
+            score = 0;
+            answeredCurrent = false;
+
+            document.getElementById('current-course-name').innerText = courseData[courseKey].name;
+            document.getElementById('total-q-num').innerText = currentQuestions.length;
+
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('results-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+            document.getElementById('nav-stats').classList.remove('hidden');
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answeredCurrent = false;
+            const q = currentQuestions[currentIndex];
+            
+            document.getElementById('current-q-num').innerText = currentIndex + 1;
+            document.getElementById('live-score').innerText = score;
+            document.getElementById('question-text').innerText = q.q;
+            
+            const progress = ((currentIndex) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-750 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium transition flex items-center justify-between group";
+                btn.innerHTML = `<span><strong class="text-indigo-400 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>`;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('explanation-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function selectOption(selectedIdx, btnElement) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+
+            const q = currentQuestions[currentIndex];
+            const optionsButtons = document.getElementById('options-container').children;
+
+            q.opts.forEach((opt, idx) => {
+                const b = optionsButtons[idx];
+                b.disabled = true;
+                if (idx === q.ans) {
+                    b.classList.remove('bg-slate-750', 'hover:bg-slate-700', 'border-slate-700');
+                    b.classList.add('bg-emerald-900/40', 'border-emerald-500', 'text-emerald-200');
+                } else if (idx === selectedIdx) {
+                    b.classList.remove('bg-slate-750', 'hover:bg-slate-700', 'border-slate-700');
+                    b.classList.add('bg-rose-900/40', 'border-rose-500', 'text-rose-200');
+                } else {
+                    b.classList.add('opacity-50');
+                }
+            });
+
+            if (selectedIdx === q.ans) {
+                score++;
+                document.getElementById('live-score').innerText = score;
+            }
+
+            const expBox = document.getElementById('explanation-box');
+            const expText = document.getElementById('explanation-text');
+
+            expBox.classList.remove('hidden', 'bg-emerald-950/60', 'border-emerald-500/50', 'text-emerald-200', 'bg-rose-950/60', 'border-rose-500/50', 'text-rose-200');
+            
+            if (selectedIdx === q.ans) {
+                expBox.classList.add('bg-emerald-950/60', 'border-emerald-500/50', 'text-emerald-200');
+                expText.innerHTML = `<strong>Correct!</strong> ${q.exp}`;
+            } else {
+                expBox.classList.add('bg-rose-950/60', 'border-rose-500/50', 'text-rose-200');
+                expText.innerHTML = `<strong>Incorrect.</strong> ${q.exp}`;
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < currentQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('nav-stats').classList.add('hidden');
+            document.getElementById('results-view').classList.remove('hidden');
+
+            const total = currentQuestions.length;
+            const percentage = Math.round((score / total) * 100);
+
+            document.getElementById('final-score-display').innerText = `${score} / ${total}`;
+            document.getElementById('score-percentage').innerText = `(${percentage}% Accuracy)`;
+        }
+
+        function restartQuiz() {
+            startQuiz(currentCourseKey);
+        }
+
+        function returnToDashboard() {
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('results-view').classList.add('hidden');
+            document.getElementById('nav-stats').classList.add('hidden');
+            document.getElementById('dashboard-view').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
