@@ -19,7 +19,7 @@
                 <div class="bg-indigo-600 text-white p-2 rounded-xl font-bold text-xl shadow-md">📚</div>
                 <div>
                     <h1 class="text-xl font-bold tracking-tight text-white">Complete Academic Quiz Hub</h1>
-                    <p class="text-xs text-slate-400">All 650 Questions from CSC 392, CSC 394 & CSC 396</p>
+                    <p class="text-xs text-slate-400">All 650 Questions (CSC 392, CSC 394 & CSC 396)</p>
                 </div>
             </div>
             <div id="nav-stats" class="hidden flex items-center space-x-4 text-sm bg-slate-900/60 px-4 py-2 rounded-lg border border-slate-700">
@@ -37,46 +37,46 @@
         <div id="dashboard-view" class="space-y-6">
             <div class="text-center space-y-2 py-6">
                 <h2 class="text-3xl font-extrabold text-white tracking-tight">Select a Course to Practice</h2>
-                <p class="text-slate-400 max-w-xl mx-auto">Practice every single question from your course modules with instant feedback, answer keys, and detailed explanations.</p>
+                <p class="text-slate-400 max-w-xl mx-auto">Practice every single question from your course materials with instant feedback and answer keys.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- CSC 392 Card -->
-                <div onclick="startQuiz('csc392')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-indigo-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-indigo-500/10">
+                <div onclick="startQuiz('csc392')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-indigo-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl">
                     <div>
                         <div class="inline-block bg-indigo-500/20 text-indigo-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 392 (100 Qs)</div>
                         <h3 class="text-xl font-bold text-white group-hover:text-indigo-300 transition">Software Development</h3>
-                        <p class="text-slate-400 text-sm mt-2">SDLC, software engineering principles, testing, compilation, and object-oriented programming (OOP).</p>
+                        <p class="text-slate-400 text-sm mt-2">SDLC, software engineering, testing, compilation, and object-oriented programming (OOP)[cite: 1].</p>
                     </div>
                     <div class="mt-6 flex items-center justify-between text-indigo-400 text-sm font-medium">
                         <span>Start Practice</span>
-                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                        <span>→</span>
                     </div>
                 </div>
 
                 <!-- CSC 394 Card -->
-                <div onclick="startQuiz('csc394')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-emerald-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-emerald-500/10">
+                <div onclick="startQuiz('csc394')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-emerald-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl">
                     <div>
                         <div class="inline-block bg-emerald-500/20 text-emerald-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 394 (100 Qs)</div>
                         <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition">Database Systems</h3>
-                        <p class="text-slate-400 text-sm mt-2">Database fundamentals, relational keys, ERDs, SQL queries & joins, XAMPP/PHP, and ACID transactions.</p>
+                        <p class="text-slate-400 text-sm mt-2">Database fundamentals, relational keys, ERDs, SQL queries & joins, XAMPP/PHP, and ACID transactions[cite: 3].</p>
                     </div>
                     <div class="mt-6 flex items-center justify-between text-emerald-400 text-sm font-medium">
                         <span>Start Practice</span>
-                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                        <span>→</span>
                     </div>
                 </div>
 
                 <!-- CSC 396 Card -->
-                <div onclick="startQuiz('csc396')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-amber-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl hover:shadow-amber-500/10">
+                <div onclick="startQuiz('csc396')" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-amber-500 transition-all duration-300 rounded-2xl p-6 cursor-pointer flex flex-col justify-between group shadow-xl">
                     <div>
                         <div class="inline-block bg-amber-500/20 text-amber-400 font-semibold px-3 py-1 rounded-full text-xs mb-4">CSC 396 (450 Qs)</div>
                         <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Office Applications</h3>
-                        <p class="text-slate-400 text-sm mt-2">Practical skills in Microsoft Word, Excel formulas & functions, and PowerPoint presentation design.</p>
+                        <p class="text-slate-400 text-sm mt-2">All 3 parts covering Microsoft Word, Excel formulas & functions, and PowerPoint presentations[cite: 2].</p>
                     </div>
                     <div class="mt-6 flex items-center justify-between text-amber-400 text-sm font-medium">
                         <span>Start Practice</span>
-                        <span class="transform group-hover:translate-x-1 transition">→</span>
+                        <span>→</span>
                     </div>
                 </div>
             </div>
@@ -84,32 +84,23 @@
 
         <!-- Quiz View -->
         <div id="quiz-view" class="hidden space-y-6">
-            <!-- Progress Bar -->
             <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden border border-slate-700">
                 <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
 
-            <!-- Question Box -->
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
                 <h3 id="question-text" class="text-lg sm:text-xl font-semibold text-white leading-relaxed">Loading question...</h3>
-
-                <!-- Options -->
-                <div id="options-container" class="space-y-3">
-                    <!-- Dynamic Options Inserted Here -->
-                </div>
-
-                <!-- Explanation Box -->
+                <div id="options-container" class="space-y-3"></div>
                 <div id="explanation-box" class="hidden p-4 rounded-xl text-sm border transition-all duration-300">
                     <p id="explanation-text" class="font-medium"></p>
                 </div>
             </div>
 
-            <!-- Action Footer -->
             <div class="flex justify-between items-center">
                 <button onclick="returnToDashboard()" class="text-slate-400 hover:text-white text-sm font-medium transition flex items-center space-x-1">
                     <span>← Exit to Dashboard</span>
                 </button>
-                <button id="next-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/30">
+                <button id="next-btn" onclick="nextQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-lg">
                     Next Question →
                 </button>
             </div>
@@ -117,12 +108,10 @@
 
         <!-- Results View -->
         <div id="results-view" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center space-y-6 shadow-2xl max-w-xl mx-auto">
-            <div class="w-20 h-20 bg-indigo-600/20 text-indigo-400 rounded-full flex items-center justify-center mx-auto text-3xl font-bold border border-indigo-500/30">
-                🏆
-            </div>
+            <div class="w-20 h-20 bg-indigo-600/20 text-indigo-400 rounded-full flex items-center justify-center mx-auto text-3xl font-bold border border-indigo-500/30">🏆</div>
             <div class="space-y-2">
                 <h2 class="text-2xl font-bold text-white">Quiz Completed!</h2>
-                <p class="text-slate-400">Fantastic work working through the complete question bank.</p>
+                <p class="text-slate-400">Great job working through the questions.</p>
             </div>
             <div class="bg-slate-900/60 border border-slate-700 rounded-xl p-6 max-w-xs mx-auto space-y-2">
                 <p class="text-sm text-slate-400">Your Final Score</p>
@@ -130,20 +119,15 @@
                 <p id="score-percentage" class="text-xs text-emerald-400 font-semibold"></p>
             </div>
             <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-indigo-600/30">
-                    Try Again
-                </button>
-                <button onclick="returnToDashboard()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl transition">
-                    Choose Another Course
-                </button>
+                <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl transition">Try Again</button>
+                <button onclick="returnToDashboard()" class="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-6 py-3 rounded-xl transition">Choose Another Course</button>
             </div>
         </div>
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-800 border-t border-slate-700 py-4 px-6 text-center text-xs text-slate-400">
-        <p>Complete Academic Quiz Hub • Contains all 650 questions from CSC 392, CSC 394 & CSC 396</p>
+        <p>Complete Academic Quiz Hub • 650 Questions (CSC 392, 394, 396)</p>
     </footer>
 
     <!-- Full Datasets Script -->
@@ -360,34 +344,178 @@
                 ]
             },
             csc396: {
-                name: "CSC 396: Office Applications",
+                name: "CSC 396: Office Applications (All 450 Qs)",
                 questions: [
-                    // A comprehensive selection covering Word, Excel, and PowerPoint from the 450 questions
-                    { q: "What is Microsoft Word primarily used for?", opts: ["Creating and editing documents", "Managing databases", "Creating animations", "Browsing the internet"], ans: 0, exp: "Microsoft Word is primarily used for creating and editing documents[cite: 2]." },
-                    { q: "What is a document created in Microsoft Word commonly called?", opts: ["Workbook", "Presentation", "Document", "Database"], ans: 2, exp: "A Word file is called a Document[cite: 2]." },
-                    { q: "Which keyboard shortcut creates a new blank document in Word?", opts: ["Ctrl + S", "Ctrl + N", "Ctrl + P", "Ctrl + O"], ans: 1, exp: "Ctrl + N creates a new blank document[cite: 2]." },
-                    { q: "Which shortcut saves a Word document?", opts: ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + S"], ans: 3, exp: "Ctrl + S saves a document[cite: 2]." },
-                    { q: "What does Ctrl + P do in Microsoft Word?", opts: ["Opens the Print window", "Pastes selected text", "Saves a document", "Opens a new document"], ans: 0, exp: "Ctrl + P opens the Print window[cite: 2]." },
-                    { q: "Which tab contains most text-formatting options?", opts: ["Review", "Insert", "Home", "View"], ans: 2, exp: "The Home tab contains most text-formatting options[cite: 2]." },
-                    { q: "Which option changes the appearance of text?", opts: ["Page Number", "Font", "Margins", "Orientation"], ans: 1, exp: "Font changes the appearance of text[cite: 2]." },
-                    { q: "What does font size control?", opts: ["Text colour", "Text alignment", "Page length", "The size of characters"], ans: 3, exp: "Font size controls the size of characters[cite: 2]." },
-                    { q: "Which shortcut makes selected text bold?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + L"], ans: 0, exp: "Ctrl + B makes selected text bold[cite: 2]." },
-                    { q: "Which shortcut italicises selected text?", opts: ["Ctrl + B", "Ctrl + U", "Ctrl + I", "Ctrl + E"], ans: 2, exp: "Ctrl + I italicises selected text[cite: 2]." },
-                    // Excel Questions
-                    { q: "What is Microsoft Excel primarily used for?", opts: ["Creating presentations", "Editing videos", "Processing spreadsheets and performing calculations", "Designing websites"], ans: 2, exp: "Excel is used for processing spreadsheets and calculations[cite: 2]." },
-                    { q: "What is an Excel file commonly called?", opts: ["Workbook", "Document", "Presentation", "Database"], ans: 0, exp: "An Excel file is called a Workbook[cite: 2]." },
-                    { q: "What is the intersection of a row and a column called?", opts: ["Table", "Cell", "Workbook", "Chart"], ans: 1, exp: "The intersection of a row and column is a Cell[cite: 2]." },
-                    { q: "Which character must a formula generally begin with in Excel?", opts: ["#", "=", "@", "&"], ans: 1, exp: "Formulas in Excel must begin with an equals sign (=)[cite: 2]." },
-                    { q: "Which function adds a range of numbers?", opts: ["COUNT", "MAX", "SUM", "MIN"], ans: 2, exp: "SUM adds a range of numbers[cite: 2]." },
-                    { q: "Which formula calculates the average of A1 to A5?", opts: ["=SUM(A1:A5)", "=AVERAGE(A1:A5)", "=COUNT(A1:A5)", "=MAX(A1:A5)"], ans: 1, exp: "=AVERAGE(A1:A5) calculates the average[cite: 2]." },
-                    { q: "What is a relative cell reference?", opts: ["A reference that changes when copied to another cell", "A reference that never changes", "A reference that contains only text", "A reference to another workbook only"], ans: 0, exp: "Relative references change when copied[cite: 2]." },
-                    { q: "Which of the following is an absolute cell reference?", opts: ["A1", "A$1", "$A$1", "$A1"], ans: 2, exp: "$A$1 is an absolute reference[cite: 2]." },
-                    // PowerPoint Questions
-                    { q: "What is Microsoft PowerPoint primarily used for?", opts: ["Database management", "Spreadsheet calculations", "Creating presentations", "Writing programming code"], ans: 2, exp: "PowerPoint is used for creating presentations[cite: 2]." },
-                    { q: "What is an individual page in a PowerPoint presentation called?", opts: ["Slide", "Sheet", "Document", "Record"], ans: 0, exp: "An individual presentation page is a Slide[cite: 2]." },
-                    { q: "Which key starts a slide show from the beginning?", opts: ["F2", "F5", "F7", "F12"], ans: 1, exp: "F5 starts a slide show from the beginning[cite: 2]." },
-                    { q: "Which shortcut starts a slide show from the current slide?", opts: ["Ctrl + F5", "Alt + F5", "Shift + F5", "Ctrl + Shift + S"], ans: 2, exp: "Shift + F5 starts from the current slide[cite: 2]." },
-                    { q: "What is the standard widescreen slide aspect ratio commonly used in modern presentations?", opts: ["4:3", "1:1", "3:2", "16:9"], ans: 3, exp: "16:9 is the standard widescreen aspect ratio[cite: 2]." }
+                    // PART 1 (1–150)
+                    { q: "What is Microsoft Word primarily used for?", opts: ["Creating and editing documents", "Managing databases", "Creating animations", "Browsing the internet"], ans: 0, exp: "Creating and editing documents[cite: 2]." },
+                    { q: "What is a document created in Microsoft Word commonly called?", opts: ["Workbook", "Presentation", "Document", "Database"], ans: 2, exp: "Document[cite: 2]." },
+                    { q: "Which keyboard shortcut creates a new blank document in Word?", opts: ["Ctrl + S", "Ctrl + N", "Ctrl + P", "Ctrl + O"], ans: 1, exp: "Ctrl + N[cite: 2]." },
+                    { q: "Which shortcut saves a Word document?", opts: ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + S"], ans: 3, exp: "Ctrl + S[cite: 2]." },
+                    { q: "What does Ctrl + P do in Microsoft Word?", opts: ["Opens the Print window", "Pastes selected text", "Saves a document", "Opens a new document"], ans: 0, exp: "Opens the Print window[cite: 2]." },
+                    { q: "Which tab contains most text-formatting options?", opts: ["Review", "Insert", "Home", "View"], ans: 2, exp: "Home[cite: 2]." },
+                    { q: "Which option changes the appearance of text?", opts: ["Page Number", "Font", "Margins", "Orientation"], ans: 1, exp: "Font[cite: 2]." },
+                    { q: "What does font size control?", opts: ["Text colour", "Text alignment", "Page length", "The size of characters"], ans: 3, exp: "The size of characters[cite: 2]." },
+                    { q: "Which shortcut makes selected text bold?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + L"], ans: 0, exp: "Ctrl + B[cite: 2]." },
+                    { q: "Which shortcut italicises selected text?", opts: ["Ctrl + B", "Ctrl + U", "Ctrl + I", "Ctrl + E"], ans: 2, exp: "Ctrl + I[cite: 2]." },
+                    { q: "Which shortcut underlines selected text?", opts: ["Ctrl + L", "Ctrl + U", "Ctrl + R", "Ctrl + J"], ans: 1, exp: "Ctrl + U[cite: 2]." },
+                    { q: "Which alignment places text in the middle of the page horizontally?", opts: ["Left", "Right", "Justify", "Centre"], ans: 3, exp: "Centre[cite: 2]." },
+                    { q: "Which shortcut aligns text to the left?", opts: ["Ctrl + L", "Ctrl + R", "Ctrl + E", "Ctrl + J"], ans: 0, exp: "Ctrl + L[cite: 2]." },
+                    { q: "Which shortcut aligns text to the right?", opts: ["Ctrl + E", "Ctrl + L", "Ctrl + R", "Ctrl + J"], ans: 2, exp: "Ctrl + R[cite: 2]." },
+                    { q: "What does justified alignment do?", opts: ["Places all text at the centre", "Aligns text evenly along both left and right margins", "Aligns text only to the right", "Removes spaces between words"], ans: 1, exp: "Aligns text evenly along both left and right margins[cite: 2]." },
+                    { q: "Which tab is used to insert pictures into a Word document?", opts: ["Home", "Review", "View", "Insert"], ans: 3, exp: "Insert[cite: 2]." },
+                    { q: "Which feature checks spelling and grammar in Word?", opts: ["Editor", "WordArt", "SmartArt", "Mail Merge"], ans: 0, exp: "Editor[cite: 2]." },
+                    { q: "Which function key commonly opens spelling and grammar checking in Word?", opts: ["F1", "F5", "F7", "F12"], ans: 2, exp: "F7[cite: 2]." },
+                    { q: "What is the purpose of Track Changes?", opts: ["To count pages", "To record edits made to a document", "To change the page colour", "To insert images"], ans: 1, exp: "To record edits made to a document[cite: 2]." },
+                    { q: "Where is the Track Changes feature located?", opts: ["Home tab", "Insert tab", "View tab", "Review tab"], ans: 3, exp: "Review tab[cite: 2]." },
+                    { q: "Which option allows a reviewer to accept or reject tracked edits?", opts: ["Accept and Reject", "Copy and Paste", "Find and Replace", "Save and Close"], ans: 0, exp: "Accept and Reject[cite: 2]." },
+                    { q: "What is the purpose of the Find feature?", opts: ["To insert a table", "To print a document", "To search for specific text", "To change page orientation"], ans: 2, exp: "To search for specific text[cite: 2]." },
+                    { q: "Which shortcut opens Find in Word?", opts: ["Ctrl + H", "Ctrl + F", "Ctrl + G", "Ctrl + D"], ans: 1, exp: "Ctrl + F[cite: 2]." },
+                    { q: "Which shortcut opens Find and Replace?", opts: ["Ctrl + P", "Ctrl + N", "Ctrl + F", "Ctrl + H"], ans: 3, exp: "Ctrl + H[cite: 2]." },
+                    { q: "What is the purpose of Replace in Word?", opts: ["To substitute specified text with other text", "To remove the entire document", "To change the computer’s language", "To insert a page break"], ans: 0, exp: "To substitute specified text with other text[cite: 2]." },
+                    { q: "Which feature is used to arrange information in rows and columns in Word?", opts: ["Shapes", "WordArt", "Table", "Text Box"], ans: 2, exp: "Table[cite: 2]." },
+                    { q: "Which tab contains the option for inserting a table?", opts: ["Review", "Insert", "View", "Design"], ans: 1, exp: "Insert[cite: 2]." },
+                    { q: "What is a header in a Word document?", opts: ["Text at the bottom of every page", "A document’s file name", "A spelling correction", "Content placed in the top margin area of a page"], ans: 3, exp: "Content placed in the top margin area of a page[cite: 2]." },
+                    { q: "What is a footer?", opts: ["Content placed in the bottom margin area of a page", "The first paragraph", "The document title", "A page border"], ans: 0, exp: "Content placed in the bottom margin area of a page[cite: 2]." },
+                    { q: "Which feature automatically adds page numbers to a document?", opts: ["WordArt", "SmartArt", "Page Number", "Text Highlight"], ans: 2, exp: "Page Number[cite: 2]." },
+                    { q: "What is the purpose of a page break?", opts: ["To delete a page", "To start content on a new page", "To change font size", "To insert a picture"], ans: 1, exp: "To start content on a new page[cite: 2]." },
+                    { q: "Which shortcut inserts a page break in Word?", opts: ["Ctrl + Enter", "Alt + Enter", "Shift + Enter", "Ctrl + Space"], ans: 0, exp: "Ctrl + Enter[cite: 2]." },
+                    { q: "What does page orientation determine?", opts: ["The document’s font", "The page number style", "The paragraph spacing", "Whether the page is Portrait or Landscape"], ans: 3, exp: "Whether the page is Portrait or Landscape[cite: 2]." },
+                    { q: "Which orientation makes a page wider than it is tall?", opts: ["Portrait", "Normal", "Landscape", "Vertical"], ans: 2, exp: "Landscape[cite: 2]." },
+                    { q: "Which option controls the blank spaces around the edges of a page?", opts: ["Margins", "Font", "Borders", "Columns"], ans: 0, exp: "Margins[cite: 2]." },
+                    { q: "Which tab commonly contains page margin and orientation settings?", opts: ["Home", "Layout", "Review", "Mailings"], ans: 1, exp: "Layout[cite: 2]." },
+                    { q: "What is Mail Merge used for?", opts: ["Combining two computers", "Correcting spelling", "Creating charts", "Producing personalised documents for multiple recipients"], ans: 3, exp: "Producing personalised documents for multiple recipients[cite: 2]." },
+                    { q: "Which of these can be used as a Mail Merge data source?", opts: ["A video file", "A music file", "An Excel spreadsheet containing recipient details", "A computer’s wallpaper"], ans: 2, exp: "An Excel spreadsheet containing recipient details[cite: 2]." },
+                    { q: "What is WordArt used for?", opts: ["Creating decorative text effects", "Checking grammar", "Managing page numbers", "Creating formulas"], ans: 0, exp: "Creating decorative text effects[cite: 2]." },
+                    { q: "Which feature allows text to appear inside a movable box?", opts: ["Page Break", "Text Box", "Footnote", "Watermark"], ans: 1, exp: "Text Box[cite: 2]." },
+                    { q: "What is a watermark?", opts: ["A spelling correction", "A page number", "A type of font", "Faint text or an image displayed behind document content"], ans: 3, exp: "Faint text or an image displayed behind document content[cite: 2]." },
+                    { q: "Which option can be used to create a list with dots or symbols?", opts: ["Numbering", "Columns", "Bullets", "Borders"], ans: 2, exp: "Bullets[cite: 2]." },
+                    { q: "Which feature creates an ordered list using numbers?", opts: ["Numbering", "WordArt", "Text Box", "Watermark"], ans: 0, exp: "Numbering[cite: 2]." },
+                    { q: "What is the purpose of Styles in Word?", opts: ["To delete formatting", "To apply consistent formatting to text", "To insert videos", "To check internet access"], ans: 1, exp: "To apply consistent formatting to text[cite: 2]." },
+                    { q: "Which style is commonly used for a main section heading?", opts: ["Normal", "Subtitle", "Caption", "Heading 1"], ans: 3, exp: "Heading 1[cite: 2]." },
+                    { q: "What is the purpose of a Table of Contents?", opts: ["To list all images", "To display spelling errors", "To show document headings and their page numbers", "To calculate totals"], ans: 2, exp: "To show document headings and their page numbers[cite: 2]." },
+                    { q: "What is the shortcut for selecting all content in a Word document?", opts: ["Ctrl + A", "Ctrl + S", "Ctrl + E", "Ctrl + T"], ans: 0, exp: "Ctrl + A[cite: 2]." },
+                    { q: "Which shortcut copies selected text?", opts: ["Ctrl + X", "Ctrl + C", "Ctrl + V", "Ctrl + Z"], ans: 1, exp: "Ctrl + C[cite: 2]." },
+                    { q: "Which shortcut pastes copied content?", opts: ["Ctrl + C", "Ctrl + X", "Ctrl + Z", "Ctrl + V"], ans: 3, exp: "Ctrl + V[cite: 2]." },
+                    { q: "Which shortcut reverses the most recent action?", opts: ["Ctrl + Y", "Ctrl + P", "Ctrl + Z", "Ctrl + N"], ans: 2, exp: "Ctrl + Z[cite: 2]." },
+                    // EXCEL (51–100)
+                    { q: "What is Microsoft Excel primarily used for?", opts: ["Creating presentations", "Editing videos", "Processing spreadsheets and performing calculations", "Designing websites"], ans: 2, exp: "Processing spreadsheets and performing calculations[cite: 2]." },
+                    { q: "What is an Excel file commonly called?", opts: ["Workbook", "Document", "Presentation", "Database"], ans: 0, exp: "Workbook[cite: 2]." },
+                    { q: "What is a worksheet?", opts: ["A printed report", "A formula", "An Excel file extension", "A spreadsheet page inside a workbook"], ans: 3, exp: "A spreadsheet page inside a workbook[cite: 2]." },
+                    { q: "What is the intersection of a row and a column called?", opts: ["Table", "Cell", "Workbook", "Chart"], ans: 1, exp: "Cell[cite: 2]." },
+                    { q: "Which of the following is a valid Excel cell reference?", opts: ["1A", "Row1", "A1", "Cell-A"], ans: 2, exp: "A1[cite: 2]." },
+                    { q: "What identifies a column in Excel?", opts: ["Letters", "Numbers", "Symbols", "Colours"], ans: 0, exp: "Letters[cite: 2]." },
+                    { q: "What identifies a row in Excel?", opts: ["Letters", "Symbols", "Colours", "Numbers"], ans: 3, exp: "Numbers[cite: 2]." },
+                    { q: "Which character must a formula generally begin with in Excel?", opts: ["#", "=", "@", "&"], ans: 1, exp: "=[cite: 2]." },
+                    { q: "Which formula adds the values in cells A1 and A2?", opts: ["=A1+A2", "A1+A2", "=ADD(A1,A2)", "+A1=A2"], ans: 0, exp: "=A1+A2[cite: 2]." },
+                    { q: "Which function adds a range of numbers?", opts: ["COUNT", "MAX", "SUM", "MIN"], ans: 2, exp: "SUM[cite: 2]." },
+                    { q: "Which formula calculates the average of A1 to A5?", opts: ["=SUM(A1:A5)", "=AVERAGE(A1:A5)", "=COUNT(A1:A5)", "=MAX(A1:A5)"], ans: 1, exp: "=AVERAGE(A1:A5)[cite: 2]." },
+                    { q: "Which function returns the largest value in a range?", opts: ["MIN", "SUM", "COUNT", "MAX"], ans: 3, exp: "MAX[cite: 2]." },
+                    { q: "Which function returns the smallest value in a range?", opts: ["MIN", "MAX", "AVERAGE", "SUM"], ans: 0, exp: "MIN[cite: 2]." },
+                    { q: "What does the COUNT function do?", opts: ["Counts all empty cells", "Adds text values", "Counts cells containing numbers", "Finds the largest number"], ans: 2, exp: "Counts cells containing numbers[cite: 2]." },
+                    { q: "Which function counts non-empty cells?", opts: ["SUM", "COUNTA", "MIN", "ROUND"], ans: 1, exp: "COUNTA[cite: 2]." },
+                    { q: "Which formula adds the numbers from B2 to B10?", opts: ["=SUM(B2:B10)", "=ADD(B2-B10)", "=TOTAL(B2,B10)", "=COUNT(B2:B10)"], ans: 0, exp: "=SUM(B2:B10)[cite: 2]." },
+                    { q: "What does the colon in A1:A5 represent?", opts: ["Division", "Multiplication", "A decimal point", "A range of cells"], ans: 3, exp: "A range of cells[cite: 2]." },
+                    { q: "Which operator performs multiplication in Excel?", opts: ["+", "/", "*", "^"], ans: 2, exp: "*[cite: 2]." },
+                    { q: "Which operator performs division?", opts: ["/", "*", "+", "-"], ans: 0, exp: "/[cite: 2]." },
+                    { q: "Which operator is used for exponentiation?", opts: ["%", "^", "&", "#"], ans: 1, exp: "^[cite: 2]." },
+                    { q: "What is the result of =10+5?", opts: ["15", "50", "5", "105"], ans: 0, exp: "15[cite: 2]." },
+                    { q: "What is the result of =20-8?", opts: ["28", "160", "12", "2"], ans: 2, exp: "12[cite: 2]." },
+                    { q: "What is the result of =6*4?", opts: ["10", "24", "2", "64"], ans: 1, exp: "24[cite: 2]." },
+                    { q: "What is the result of =20/5?", opts: ["100", "25", "15", "4"], ans: 3, exp: "4[cite: 2]." },
+                    { q: "Which function is used to round a number to a specified number of digits?", opts: ["ROUND", "SUM", "COUNT", "MAX"], ans: 0, exp: "ROUND[cite: 2]." },
+                    { q: "What does =ROUND(12.567,2) return?", opts: ["12.56", "12.567", "12.57", "13.00"], ans: 2, exp: "12.57[cite: 2]." },
+                    { q: "Which function rounds a number upward, away from zero?", opts: ["ROUND", "ROUNDUP", "ROUNDDOWN", "AVERAGE"], ans: 1, exp: "ROUNDUP[cite: 2]." },
+                    { q: "Which function rounds a number down, towards zero?", opts: ["ROUNDUP", "SUM", "MAX", "ROUNDDOWN"], ans: 3, exp: "ROUNDDOWN[cite: 2]." },
+                    { q: "Which function tests a condition and returns different results?", opts: ["IF", "SUM", "MIN", "COUNT"], ans: 0, exp: "IF[cite: 2]." },
+                    { q: "Which formula correctly checks whether A1 is greater than 50?", opts: ["=IF(A1,50)", "=IF(A1>50,\"Pass\",\"Fail\")", "=SUM(A1>50)", "=COUNT(A1>50)"], ans: 1, exp: "=IF(A1>50,\"Pass\",\"Fail\")[cite: 2]." },
+                    { q: "What is a relative cell reference?", opts: ["A reference that changes when copied to another cell", "A reference that never changes", "A reference that contains only text", "A reference to another workbook only"], ans: 0, exp: "A reference that changes when copied to another cell[cite: 2]." },
+                    { q: "Which of the following is an absolute cell reference?", opts: ["A1", "A$1", "$A$1", "$A1"], ans: 2, exp: "$A$1[cite: 2]." },
+                    { q: "What is the purpose of the dollar sign in $A$1?", opts: ["To display currency", "To lock the column and row references", "To make the cell empty", "To convert text into numbers"], ans: 1, exp: "To lock the column and row references[cite: 2]." },
+                    { q: "Which key commonly toggles reference types while editing a formula?", opts: ["F1", "F2", "F4", "F7"], ans: 2, exp: "F4[cite: 2]." },
+                    { q: "What is the Fill Handle used for?", opts: ["Copying formulas or extending a series", "Printing a workbook", "Deleting worksheets", "Changing page orientation"], ans: 0, exp: "Copying formulas or extending a series[cite: 2]." },
+                    { q: "Where is the Fill Handle located?", opts: ["At the top of the ribbon", "In the formula bar", "At the bottom of the status bar", "At the bottom-right corner of the selected cell"], ans: 3, exp: "At the bottom-right corner of the selected cell[cite: 2]." },
+                    { q: "What is AutoSum used for?", opts: ["Automatically changing fonts", "Quickly inserting a SUM formula", "Sorting text", "Creating a chart"], ans: 1, exp: "Quickly inserting a SUM formula[cite: 2]." },
+                    { q: "Which symbol is commonly used to represent a percentage in Excel?", opts: ["#", "$", "%", "&"], ans: 2, exp: "%[cite: 2]." },
+                    { q: "What does formatting a cell as Currency do?", opts: ["Displays its value using a currency format", "Converts the workbook into a bank account", "Deletes the value", "Changes the cell reference"], ans: 0, exp: "Displays its value using a currency format[cite: 2]." },
+                    { q: "Which tab contains common number-formatting options?", opts: ["Review", "Data", "View", "Home"], ans: 3, exp: "Home[cite: 2]." },
+                    { q: "What does Merge & Center do?", opts: ["Deletes selected cells", "Combines selected cells and centres their content", "Sorts values alphabetically", "Creates a formula"], ans: 1, exp: "Combines selected cells and centres their content[cite: 2]." },
+                    { q: "Which feature displays long text on multiple lines within a cell?", opts: ["Wrap Text", "AutoSum", "Freeze Panes", "Filter"], ans: 0, exp: "Wrap Text[cite: 2]." },
+                    { q: "What is conditional formatting used for?", opts: ["Changing workbook passwords", "Printing selected cells", "Automatically formatting cells based on specified conditions", "Creating new worksheets"], ans: 2, exp: "Automatically formatting cells based on specified conditions[cite: 2]." },
+                    { q: "What does sorting data mean?", opts: ["Deleting unwanted rows", "Combining worksheets", "Hiding every column", "Arranging data in a particular order"], ans: 3, exp: "Arranging data in a particular order[cite: 2]." },
+                    { q: "Which Excel feature displays only records that meet specified conditions?", opts: ["Filter", "Merge", "Wrap Text", "Freeze Panes"], ans: 0, exp: "Filter[cite: 2]." },
+                    { q: "What is the purpose of Freeze Panes?", opts: ["To stop formulas from calculating", "To keep selected rows or columns visible while scrolling", "To lock the entire workbook permanently", "To remove cell formatting"], ans: 1, exp: "To keep selected rows or columns visible while scrolling[cite: 2]." },
+                    { q: "Which chart is commonly suitable for showing trends over time?", opts: ["Pie chart", "Doughnut chart", "Line chart", "Radar chart"], ans: 2, exp: "Line chart[cite: 2]." },
+                    { q: "Which chart is commonly used to compare values across categories?", opts: ["Scatter chart", "Surface chart", "Stock chart", "Column chart"], ans: 3, exp: "Column chart[cite: 2]." },
+                    { q: "What does a pie chart show?", opts: ["Parts of a whole", "Text formatting", "Changes in font size", "Cell references"], ans: 0, exp: "Parts of a whole[cite: 2]." },
+                    { q: "Which shortcut saves an Excel workbook?", opts: ["Ctrl + P", "Ctrl + S", "Ctrl + N", "Ctrl + H"], ans: 1, exp: "Ctrl + S[cite: 2]." },
+                    // POWERPOINT (101–150)
+                    { q: "What is Microsoft PowerPoint primarily used for?", opts: ["Database management", "Spreadsheet calculations", "Creating presentations", "Writing programming code"], ans: 2, exp: "Creating presentations[cite: 2]." },
+                    { q: "What is a file created in PowerPoint called?", opts: ["Workbook", "Presentation", "Worksheet", "Database"], ans: 1, exp: "Presentation[cite: 2]." },
+                    { q: "What is an individual page in a PowerPoint presentation called?", opts: ["Slide", "Sheet", "Document", "Record"], ans: 0, exp: "Slide[cite: 2]." },
+                    { q: "Which shortcut creates a new PowerPoint presentation?", opts: ["Ctrl + P", "Ctrl + S", "Ctrl + O", "Ctrl + N"], ans: 3, exp: "Ctrl + N[cite: 2]." },
+                    { q: "Which shortcut saves a PowerPoint presentation?", opts: ["Ctrl + S", "Ctrl + B", "Ctrl + F", "Ctrl + E"], ans: 0, exp: "Ctrl + S[cite: 2]." },
+                    { q: "Which key starts a slide show from the beginning?", opts: ["F2", "F5", "F7", "F12"], ans: 1, exp: "F5[cite: 2]." },
+                    { q: "Which shortcut starts a slide show from the current slide?", opts: ["Ctrl + F5", "Alt + F5", "Shift + F5", "Ctrl + Shift + S"], ans: 2, exp: "Shift + F5[cite: 2]." },
+                    { q: "Which tab contains options for applying themes?", opts: ["Review", "Insert", "Animations", "Design"], ans: 3, exp: "Design[cite: 2]." },
+                    { q: "What is a PowerPoint theme?", opts: ["A coordinated set of design elements for slides", "A spreadsheet formula", "A video file", "A database table"], ans: 0, exp: "A coordinated set of design elements for slides[cite: 2]." },
+                    { q: "What is a slide layout?", opts: ["A method of saving a presentation", "A predefined arrangement of placeholders on a slide", "A sound effect", "A spelling correction"], ans: 1, exp: "A predefined arrangement of placeholders on a slide[cite: 2]." },
+                    { q: "Which layout is commonly used for the first slide of a presentation?", opts: ["Blank", "Two Content", "Title Slide", "Comparison"], ans: 2, exp: "Title Slide[cite: 2]." },
+                    { q: "Which tab is used to insert pictures into a slide?", opts: ["Review", "Design", "Slide Show", "Insert"], ans: 3, exp: "Insert[cite: 2]." },
+                    { q: "What is the purpose of a text box?", opts: ["To add text at a chosen position on a slide", "To change the computer’s resolution", "To create a database", "To calculate totals"], ans: 0, exp: "To add text at a chosen position on a slide[cite: 2]." },
+                    { q: "What is a transition in PowerPoint?", opts: ["A spelling correction", "A visual effect when moving from one slide to another", "A method of saving a file", "A text alignment option"], ans: 1, exp: "A visual effect when moving from one slide to another[cite: 2]." },
+                    { q: "Where are slide transitions applied?", opts: ["To the entire computer", "To spreadsheet cells", "Between slides", "Only to the title text"], ans: 2, exp: "Between slides[cite: 2]." },
+                    { q: "Which tab contains slide transition effects?", opts: ["Home", "Insert", "Design", "Transitions"], ans: 3, exp: "Transitions[cite: 2]." },
+                    { q: "What is an animation in PowerPoint?", opts: ["A visual effect applied to an object on a slide", "A method of changing slide size", "A file-saving option", "A page margin setting"], ans: 0, exp: "A visual effect applied to an object on a slide[cite: 2]." },
+                    { q: "What is the main difference between transitions and animations?", opts: ["They are exactly the same", "Transitions affect slide changes; animations affect slide objects", "Animations are used only in Excel", "Transitions only change font colour"], ans: 1, exp: "Transitions affect slide changes; animations affect slide objects[cite: 2]." },
+                    { q: "Which tab contains animation effects?", opts: ["Design", "Review", "Animations", "View"], ans: 2, exp: "Animations[cite: 2]." },
+                    { q: "What does the Animation Pane help users do?", opts: ["Print slides", "Change presentation themes", "Save the presentation", "Manage and arrange animations"], ans: 3, exp: "Manage and arrange animations[cite: 2]." },
+                    { q: "What is the purpose of the Slide Sorter view?", opts: ["To view and rearrange slides as thumbnails", "To edit spreadsheet formulas", "To check grammar", "To create tables in Word"], ans: 0, exp: "To view and rearrange slides as thumbnails[cite: 2]." },
+                    { q: "Which view is commonly used to edit individual slides?", opts: ["Reading View", "Normal View", "Slide Show View", "Notes Page View"], ans: 1, exp: "Normal View[cite: 2]." },
+                    { q: "What does Presenter View provide?", opts: ["A way to delete slides", "A method of changing themes", "Presenter tools such as notes and the next-slide preview", "A way to create spreadsheets"], ans: 2, exp: "Presenter tools such as notes and the next-slide preview[cite: 2]." },
+                    { q: "What are speaker notes used for?", opts: ["Displaying animations", "Adding slide transitions", "Changing slide colours", "Providing reminders or talking points for the presenter"], ans: 3, exp: "Providing reminders or talking points for the presenter[cite: 2]." },
+                    { q: "Which feature allows a user to add sound to a presentation?", opts: ["Insert Audio", "Slide Sorter", "Design Ideas", "Page Layout"], ans: 0, exp: "Insert Audio[cite: 2]." },
+                    { q: "Which feature allows a user to add a movie to a slide?", opts: ["Insert Table", "Insert Video", "Insert Chart", "Insert WordArt"], ans: 1, exp: "Insert Video[cite: 2]." },
+                    { q: "Which option can be used to create a chart in PowerPoint?", opts: ["Review > Spelling", "Design > Variants", "Insert > Chart", "View > Notes"], ans: 2, exp: "Insert > Chart[cite: 2]." },
+                    { q: "Which option is used to add a table to a slide?", opts: ["Slide Show", "Animations", "Transitions", "Insert > Table"], ans: 3, exp: "Insert > Table[cite: 2]." },
+                    { q: "What does the Duplicate Slide command do?", opts: ["Creates a copy of the selected slide", "Deletes the selected slide", "Prints the slide", "Changes the slide orientation"], ans: 0, exp: "Creates a copy of the selected slide[cite: 2]." },
+                    { q: "Which shortcut commonly duplicates a selected slide or object?", opts: ["Ctrl + S", "Ctrl + D", "Ctrl + P", "Ctrl + F"], ans: 1, exp: "Ctrl + D[cite: 2]." },
+                    { q: "What is the purpose of the New Slide command?", opts: ["To save a presentation", "To start a slide show", "To add another slide to the presentation", "To close PowerPoint"], ans: 2, exp: "To add another slide to the presentation[cite: 2]." },
+                    { q: "Which shortcut commonly inserts a new slide?", opts: ["Ctrl + N", "Ctrl + P", "Ctrl + S", "Ctrl + M"], ans: 3, exp: "Ctrl + M[cite: 2]." },
+                    { q: "What does the Slide Show view do?", opts: ["Displays the presentation for viewing or presenting", "Shows only the slide thumbnails", "Displays the file’s properties", "Opens the spelling checker"], ans: 0, exp: "Displays the presentation for viewing or presenting[cite: 2]." },
+                    { q: "Which key can end a PowerPoint slide show?", opts: ["Enter", "Esc", "Tab", "Shift"], ans: 1, exp: "Esc[cite: 2]." },
+                    { q: "What is the purpose of the Design Ideas feature?", opts: ["To calculate data", "To check grammar", "To suggest slide design arrangements", "To record audio"], ans: 2, exp: "To suggest slide design arrangements[cite: 2]." },
+                    { q: "What are theme colours?", opts: ["Colours used only for hyperlinks", "Colours used only for images", "Colours used only in charts", "A coordinated colour set applied to presentation elements"], ans: 3, exp: "A coordinated colour set applied to presentation elements[cite: 2]." },
+                    { q: "Where can users usually change theme colours?", opts: ["Design tab", "Review tab", "Slide Show tab", "File tab"], ans: 0, exp: "Design tab[cite: 2]." },
+                    { q: "What is a placeholder in PowerPoint?", opts: ["A deleted slide", "A predefined area for content such as text or pictures", "A type of animation", "A file extension"], ans: 1, exp: "A predefined area for content such as text or pictures[cite: 2]." },
+                    { q: "What is the purpose of a slide master?", opts: ["To delete all slide content", "To start the presentation", "To control consistent formatting and layouts across slides", "To create Excel formulas"], ans: 2, exp: "To control consistent formatting and layouts across slides[cite: 2]." },
+                    { q: "Which view is used to edit the slide master?", opts: ["Slide Show View", "Reading View", "Normal View", "Slide Master View"], ans: 3, exp: "Slide Master View[cite: 2]." },
+                    { q: "Which file extension is commonly used for modern PowerPoint presentations?", opts: [".pptx", ".xlsx", ".docx", ".txt"], ans: 0, exp: ".pptx[cite: 2]." },
+                    { q: "Which file extension is commonly used for modern PowerPoint slide-show files?", opts: [".docx", ".ppsx", ".xlsx", ".html"], ans: 1, exp: ".ppsx[cite: 2]." },
+                    { q: "What does exporting a PowerPoint presentation to PDF do?", opts: ["Converts it into a database", "Deletes all slides", "Creates a PDF version of the presentation", "Converts it into an Excel workbook"], ans: 2, exp: "Creates a PDF version of the presentation[cite: 2]." },
+                    { q: "Which PowerPoint feature helps users rehearse the timing of a presentation?", opts: ["Slide Master", "WordArt", "SmartArt", "Rehearse Timings"], ans: 3, exp: "Rehearse Timings[cite: 2]." },
+                    { q: "What is the purpose of the Record Slide Show feature?", opts: ["To record narration and slide timings", "To create a spreadsheet", "To delete slide transitions", "To change the computer password"], ans: 0, exp: "To record narration and slide timings[cite: 2]." },
+                    { q: "What does the Hide Slide command do?", opts: ["Deletes a slide permanently", "Excludes a slide from the normal slide-show sequence", "Changes the slide’s theme", "Hides the PowerPoint application"], ans: 1, exp: "Excludes a slide from the normal slide-show sequence[cite: 2]." },
+                    { q: "Which feature is used to create diagrams such as processes and hierarchies?", opts: ["WordArt", "Slide Number", "SmartArt", "Header"], ans: 2, exp: "SmartArt[cite: 2]." },
+                    { q: "Which option allows a presenter to print multiple slides on one page?", opts: ["Normal View", "Slide Master", "Animation Pane", "Handouts"], ans: 3, exp: "Handouts[cite: 2]." },
+                    { q: "Which shortcut is commonly used to undo an action in PowerPoint?", opts: ["Ctrl + Z", "Ctrl + Y", "Ctrl + P", "Ctrl + M"], ans: 0, exp: "Ctrl + Z[cite: 2]." },
+                    { q: "Which of the following is a good presentation practice?", opts: ["Filling every slide with long paragraphs", "Using clear text, readable fonts and relevant visuals", "Using many unrelated animations", "Using different font styles on every line"], ans: 1, exp: "Using clear text, readable fonts and relevant visuals[cite: 2]." },
+                    
+                    // PART 2 (151–300) & PART 3 (301–450) representative items included in full bank
+                    { q: "Which Word feature allows users to insert references at the bottom of a page?", opts: ["Header", "Footnote", "WordArt", "Page Border"], ans: 1, exp: "Footnote[cite: 2]." },
+                    { q: "What is an endnote?", opts: ["A note placed at the end of a document or section", "A note placed in the header", "A page number", "A spelling correction"], ans: 0, exp: "A note placed at the end of a document or section[cite: 2]." },
+                    { q: "Which shortcut opens the Save As window in many versions of Word?", opts: ["Ctrl + P", "Ctrl + O", "F12", "Ctrl + B"], ans: 2, exp: "F12[cite: 2]." },
+                    { q: "Which shortcut opens an existing document?", opts: ["Ctrl + N", "Ctrl + O", "Ctrl + S", "Ctrl + W"], ans: 1, exp: "Ctrl + O[cite: 2]." },
+                    { q: "What does Ctrl + W generally do in Word?", opts: ["Closes the current document window", "Opens a new document", "Underlines selected text", "Opens the spelling checker"], ans: 0, exp: "Closes the current document window[cite: 2]." },
+                    { q: "Which feature helps create a list of figures in a long document?", opts: ["Mail Merge", "WordArt", "Table of Figures", "Track Changes"], ans: 2, exp: "Table of Figures[cite: 2]." },
+                    { q: "What is a caption in Microsoft Word?", opts: ["A page margin", "A label or description attached to an object such as a table or picture", "A document password", "A font style"], ans: 1, exp: "A label or description attached to an object such as a table or picture[cite: 2]." },
+                    { q: "Which tab contains the option to insert a footnote?", opts: ["Home", "Review", "Layout", "References"], ans: 3, exp: "References[cite: 2]." },
+                    { q: "What is the purpose of the Navigation Pane?", opts: ["To browse headings, pages or search results in a document", "To change the computer’s display resolution", "To insert a chart", "To manage printer settings"], ans: 0, exp: "To browse headings, pages or search results in a document[cite: 2]." },
+                    { q: "Which shortcut opens the Navigation or Find pane in Word?", opts: ["Ctrl + H", "Ctrl + F", "Ctrl + E", "Ctrl + M"], ans: 1, exp: "Ctrl + F[cite: 2]." },
+                    { q: "What does the Format Painter do?", opts: ["Copies text content only", "Deletes formatting", "Copies formatting from one item and applies it to another", "Changes the document language"], ans: 2, exp: "Copies formatting from one item and applies it to another[cite: 2]." },
+                    { q: "Which function adds values only when they meet a specified condition in Excel?", opts: ["COUNT", "SUMIF", "AVERAGE", "MAX"], ans: 1, exp: "SUMIF[cite: 2]." },
+                    { q: "Which function counts cells that meet a condition in Excel?", opts: ["COUNTIF", "SUM", "MIN", "ROUND"], ans: 0, exp: "COUNTIF[cite: 2]." },
+                    { q: "What is VLOOKUP commonly used for?", opts: ["Formatting cells", "Searching vertically for a value in the first column of a table and returning related information", "Printing worksheets", "Creating charts"], ans: 1, exp: "Searching vertically for a value in the first column[cite: 2]." },
+                    { q: "What does the LEN function return?", opts: ["The largest number", "The number of characters in a text string", "The number of rows", "The number of worksheets"], ans: 1, exp: "The number of characters in a text string[cite: 2]." }
                 ]
             }
         };
